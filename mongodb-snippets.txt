@@ -1,0 +1,12 @@
+// to get data between given dates
+
+db.getCollection('persons').aggregate([
+    { $match: { "registered": { $gte: new Date("2015-02-11"), $lte: new Date("2015-02-12") } } }
+])
+
+
+// get counts based on category
+
+db.getCollection('persons').aggregate([
+    { $group: { _id: "$eyeColor", count: { $sum: 1 }} }
+])
