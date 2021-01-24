@@ -1,1 +1,73 @@
 /* You can add global styles to this file, and also import other style files */
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root{
+    --primary-color: #3f72af;
+    --secondary-color: #112d4e;
+    --light: #dbe2ef;
+    --heaven: #f9f7f7;
+}
+
+@font-face{
+    font-family: "open-sans-regular";
+    src: url('./assets/fonts/OpenSans-Regular.ttf');
+}
+
+body{
+    height: 100vh;
+    background: url('./assets/images/blue2.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    font-family: "open-sans-regular";
+    --font-smoothing: antialiased;
+}
+
+.background{
+    min-height: 100%;
+    width: 100%;
+    background-color: var(--light);
+}
+
+.container{
+    width: 1280px;
+    height: 100vh;
+    margin: auto;
+}
+
+.flex{
+    display: flex;
+}
+
+.items-center{
+    align-items: center;
+}
+.justify-between{
+    justify-content: space-between;
+}
+.justify-center{
+    justify-content: center;
+}
+
+.btn{
+    width: 8rem;
+    height: 2rem;
+    padding: 0.5rem;
+    font-size: 1rem;
+    outline: none;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-primary{
+    background-color: var(--primary-color);
+    color: var(--heaven);
+}
+.btn-primary:hover{
+    background-color: var(--secondary-color);
+    color: var(--heaven);
+}

@@ -1,0 +1,42 @@
+.background{
+    background-color: aqua;
+}
+.login{
+    text-align: right;
+    padding: 1rem;
+}
+
+.login a{
+    text-align: right;
+    font-weight: regular;
+    color:  var(--heaven);
+    text-decoration:none;
+    font-size: 1.5rem;
+}
+
+.brand{
+    text-align: center;
+    margin-top: 12rem;
+    color: var(--heaven);
+}
+
+.brand h1{
+    font-size: 3rem;
+}
+
+.search{
+    margin-top: 1rem;
+}
+
+.search input{
+    width: 40%;
+    height: 2rem;
+    font-family: "open-sans-regular";
+    padding: 0.2rem;
+}
+
+.search img{
+    cursor: pointer;
+    height: 1.7rem;
+    margin-left: 0.5rem;
+}
