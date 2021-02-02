@@ -1,0 +1,40 @@
+
+.upload-paper{
+    padding: 1rem;
+    text-align: left;
+    width: 50%;
+    margin: auto;
+}
+
+.section{
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+}
+
+.authors div{
+    margin-bottom: 1rem;
+}
+
+.section input, .section select{
+    height: 1.5rem;
+    width: 100%;
+    border: none;
+    outline: none;
+    font-size: 1rem;
+}
+
+.action{
+    text-align: center;
+}
+
+.upload-file label{
+    font-size: 1rem;
+}
+
+.file-picker-error{
+    color: var(--danger);
+}
+
+input.ng-invalid.ng-touched,select.ng-invalid.ng-touched{
+    border: 1px solid red;
+}

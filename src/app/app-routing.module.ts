@@ -10,6 +10,9 @@ const routes: Routes = [
     { path: 'home', component: HomeComponent },
     { path: 'search/:keywords', component: SearchComponent },
     { path: 'login', component: LoginComponent },
+    { path: 'admin', loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule) },
+    { path: 'student', loadChildren: () => import('./student/student.module').then(m => m.StudentModule) },
+    { path: 'spoc', loadChildren: () => import('./spoc/spoc.module').then(m => m.SPOCModule) },
     { path: '**', component: PageNotFoundComponent }
 ]
 

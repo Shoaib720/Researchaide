@@ -8,12 +8,13 @@ const register = (req, res, next) => {
     college.save()
     .then(result => {
         res.status(201).json({
-            message: "College registered!",
+            message: "SUCCESS",
             data: result._id
         });
     })
     .catch(err => {
         res.status(500).json({
+            message: "INTERNAL_SERVER_ERROR",
             error: err
         });
     });

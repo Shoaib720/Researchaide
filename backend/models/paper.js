@@ -16,6 +16,7 @@ const mongoose = require('mongoose');
     },
     authors: {
       type: [String],
+      required: true,
       validate: [authorsLimit, 'Authors limit can not exceed 3']
     },
     uploadedBy: {
@@ -24,10 +25,11 @@ const mongoose = require('mongoose');
     },
     college: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'colleges'
+      ref: 'College'
     },
     publicationDate: {
       type: Date,
+      default: null
     },
     path: {
       type: String,

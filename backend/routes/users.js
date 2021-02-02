@@ -7,7 +7,8 @@ const AdminAuth = require('../middlewares/admin-auth');
 const SPOCAuth = require('../middlewares/spoc-auth');
 const StudentAuth = require('../middlewares/student-auth');
 
-router.post('/student-signup', AuthenticateJWT, SPOCAuth, usersController.studentSignup);
+// router.post('/student-signup', AuthenticateJWT, SPOCAuth, usersController.studentSignup);
+router.post('/student-signup', usersController.studentSignup);
 
 router.post('/spoc-signup', AuthenticateJWT, AdminAuth, usersController.spocSignup);
 
@@ -19,7 +20,8 @@ router.post('/su-login', usersController.loginSuperUser);
 
 router.post('/login', usersController.login);
 
-router.get('/students-by-college/:collegeId', AuthenticateJWT, SPOCAuth, usersController.getStudentsByCollegeId);
+// router.get('/students-by-college/:collegeId', AuthenticateJWT, SPOCAuth, usersController.getStudentsByCollegeId);
+router.get('/students-by-college/:collegeId', usersController.getStudentsByCollegeId);
 
 router.get('/spocs', AuthenticateJWT, AdminAuth, usersController.getSPOCs);
 

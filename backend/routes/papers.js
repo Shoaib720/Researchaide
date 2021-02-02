@@ -37,6 +37,8 @@ const upload = multer({storage: multerStorage, limits: { fileSize: maxSize }});
 
 router.post('/upload', AuthenticateJWT, upload.single('file'), papersController.upload);
 
+router.get('/', papersController.getAllPapers);
+
 router.get('/:id', papersController.getByPaperId);
 
 router.get('/keywordAndArea/:keyword/:area', papersController.getByKeywordAndAreaOfResearch);
@@ -45,13 +47,15 @@ router.get('/college/:collegeId', AuthenticateJWT, papersController.getByCollege
 
 router.get('/uploadedBy/:uploaderId', AuthenticateJWT, StudentAuth, papersController.getByUploaderId);
 
-router.get('/unverifiedByCollege/:collegeId', AuthenticateJWT, SPOCAuth, papersController.getUnverifiedPapersByCollegeId);
+// router.get('/unverifiedByCollege/:collegeId', AuthenticateJWT, SPOCAuth, papersController.getUnverifiedPapersByCollegeId);
+router.get('/unverifiedByCollege/:collegeId', papersController.getUnverifiedPapersByCollegeId);
 
 router.get('/counts', AuthenticateJWT, AdminAuth, papersController.getCounts);
 
 router.get('/latestVerified', papersController.getLatestVerifiedPapers);
 
-router.post('/updateStatus/:id', AuthenticateJWT, SPOCAuth, papersController.updateStatus);
+// router.put('/updateStatus/:id', AuthenticateJWT, SPOCAuth, papersController.updateStatus);
+router.put('/updateStatus/:id', papersController.updateStatus);
 
 router.delete('/:id', AuthenticateJWT, StudentAuth, papersController.deleteById);
 

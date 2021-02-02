@@ -1,0 +1,76 @@
+<div class="background">
+    <div class="container">
+        <div class="upload-paper">
+            <form [formGroup]="form" (ngSubmit)="onUpload()">
+                <div class="error flex" *ngIf="error !== null">
+                    <div class="icon"><img></div>
+                    <div class="message">{{error}}</div>
+                </div>
+                <div class="success flex" *ngIf="uploadedPaperId !== null">
+                    <div class="icon"><img></div>
+                    <div class="message">Uploaded successfully! Paper Id: {{uploadedPaperId}}</div>
+                </div>
+                <div class="title section">
+                    <label for="paper-title">Title</label><br>
+                    <input type="text" id="paper-title" formControlName="title" required>
+                </div>
+                <div class="keywords section">
+                    <label for="paper-keywords">Keywords</label><br>
+                    <input type="text" id="paper-keywords" formControlName="keywords" placeholder="Seperated by commas" required>
+                </div>
+                <div class="area-of-research section">
+                    <label for="research-drop-down">Area of Research</label><br>
+                    <select name="research-drop-down" id="research-drop-down" formControlName="areaOfResearch" required>
+                        <option value="" disabled selected hidden>Select</option>
+                        <option value="business">Business & Management</option>
+                        <option value="computer">Comp. Science & I.T</option>
+                        <option value="education">Education</option>
+                        <option value="environment">Environment</option>
+                        <option value="agriculture">Agriculture</option>
+                        <option value="science">Physical Sciences</option>
+                        <option value="law">Government & Law</option>
+                        <option value="information">Library & Information Science</option>
+                        <option value="media">Media & Communication</option>
+                        <option value="medical">Medical & Life Science</option>
+                        <option value="engineering">Engineering</option>
+                        <option value="security">Security & Forensics</option>
+                        <option value="social">Social Sciences & Humanities</option>
+                    </select>
+                </div>
+                <div class="authors section flex flex-column">
+                    <div class="author">
+                        <label for="paper-author-1">Author Name</label><br>
+                        <input type="text" id="paper-author-1" formControlName="author1Name" required>
+                    </div>
+
+                    <div class="co-author-1">
+                        <label for="paper-author-2">Co-author 1 name</label><br>
+                        <input type="text" id="paper-author-2" formControlName="author2Name">
+                    </div>
+
+                    <div class="co-author-2">
+                        <label for="paper-author-3">Co-author 2 name</label><br>
+                        <input type="text" id="paper-author-3" formControlName="author3Name">
+                    </div>
+                </div>
+                <div class="file-picker-error" *ngIf="filePickerError !== null">
+                    {{filePickerError}}
+                </div>
+                <div class="upload-file section">
+                    <label>File type: .pdf and Max upload size: 10MB</label>
+                    <input type="file" name="" id="file-picker" accept=".pdf" (change)="onFilePicked($event)" required>
+                </div>
+                <div class="action section">
+                    <button
+                        type="submit"
+                        class="btn"
+                    >Upload</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<!-- [disabled]="!form.valid || !isInputFileValid"
+[ngClass]="!form.valid || !isInputFileValid ? 'btn-disable' : 'btn-primary'" -->

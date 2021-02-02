@@ -1,1 +1,17 @@
-<p>student works!</p>
+<div class="background">
+    <div class="container">
+        <div class="header flex justify-between">
+            <div class="brand">
+                <h1>Researchaide</h1>
+            </div>
+            <div class="navbar flex">
+                <ul class="level-1-ul flex">
+                    <li><a routerLink="my-papers">My Papers</a></li>
+                    <li><a routerLink="upload-papers">Upload Papers</a></li>
+                </ul>
+                <a href="#logout"><img src="../../assets/icons/logout-blue.svg" alt="logout"></a>
+            </div>
+        </div>
+    </div>
+    <router-outlet></router-outlet>
+</div>

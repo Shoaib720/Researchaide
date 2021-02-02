@@ -1,3 +1,53 @@
 <div class="background">
-    <p>search works!</p>
+    <div class="container">
+        <div class="header flex items-center">
+            <div class="brand">
+                <h1><a routerLink="/home">Researchaide</a></h1>
+            </div>
+            <div class="area-of-research">
+                <select name="research-drop-down" id="research-drop-down">
+                    <option value="" disabled selected hidden>Select</option>
+                    <option value="business">Business & Management</option>
+                    <option value="computer">Comp. Science & I.T</option>
+                    <option value="education">Education</option>
+                    <option value="environment">Environment</option>
+                    <option value="agriculture">Agriculture</option>
+                    <option value="science">Physical Sciences</option>
+                    <option value="law">Government & Law</option>
+                    <option value="information">Library & Information Science</option>
+                    <option value="media">Media & Communication</option>
+                    <option value="medical">Medical & Life Science</option>
+                    <option value="engineering">Engineering</option>
+                    <option value="security">Security & Forensics</option>
+                    <option value="social">Social Sciences & Humanities</option>
+                </select>
+            </div>
+            <div class="search flex items-center justify-center">
+                <input type="text" placeholder="Search research papers">
+                <a href="#"><img src="../../assets/icons/search-blue.svg" alt=""></a>
+            </div>
+        </div>
+
+        <div class="papers-section">
+            <div class="error flex" *ngIf="error !== null">
+                <div class="icon"><img></div>
+                <div class="message">{{error}}</div>
+            </div>
+            <div class="no-papers" *ngIf="papers.length < 1">
+                <h2>No papers found.</h2>
+                <h3>Try searching with some other keyword.</h3>
+            </div>
+            <div class="paper-card" *ngFor="let paper of papers; let i=index">
+                <div class="title">{{paper.title}}</div>
+                <div class="authors">{{paper.authors[0]}}, {{paper.authors[1]}}, {{paper.authors[2]}}</div>
+                <div class="publication" *ngIf="paper.publicationDate != null">Published on: {{paper.publicationDate}}</div>
+                <div class="extras flex justify-between">
+                    <div class="status-accepted"></div>
+                    <div class="actions flex items-center">
+                        <a href=""><img src="../../assets/icons/view-blue.svg" alt=""></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

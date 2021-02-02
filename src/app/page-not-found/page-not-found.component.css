@@ -1,0 +1,33 @@
+.container{
+    flex-direction:column;
+    height: 100%;
+    width: 100%;
+}
+
+.error-heading{
+    text-align: center;
+}
+
+.error-heading h1{
+    color: var(--secondary-color);
+    font-size: 10rem;
+}
+
+.error-heading h2{
+    color: var(--secondary-color);
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.error-not-found{
+    text-align: center;
+}
+
+.error-not-found h2{
+    color: var(--primary-color);
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+.error-not-found button{
+    margin: auto;
+}

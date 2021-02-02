@@ -23,6 +23,21 @@ function getmonth(){
     }
 }
 
+const getAllPapers = (req, res, next) => {
+    Paper.find()
+    .then(papers => {
+        res.status(200).json({
+            message: "SUCCESS",
+            data: papers
+        });
+    })
+    .catch(err => {
+        res.status(404).json({
+            message: "NOT_FOUND"
+        });
+    });
+}
+
 const upload = (req, res, next) => {
     let filePath;
     const paper = new Paper({
@@ -38,19 +53,20 @@ const upload = (req, res, next) => {
     paper.save()
     .then(uploadedPaper => {
         res.status(201).json({
-            message: "Paper added!",
-            data: uploadedPaper._id
+            message: "SUCCESS",
+            data: uploadedPaper
         });
     })
     .catch(err => {
         unlinkAsync(filePath);
         if(err.errors.authors.name === "ValidatorError"){
             res.status(400).json({
-                error: "AUTHORS_LIMIT_EXCEEDED"
+                message: "AUTHORS_LIMIT_EXCEEDED"
             });
         }
         else{
             res.status(500).json({
+                message: "INTERNAL_SERVER_ERROR",
                 error: err
             });
         }
@@ -62,7 +78,13 @@ const getByPaperId = (req, res, next) => {
         papers => {
             res.status(200).sendFile(path.join(__dirname , '../' + papers.path))
         }
-    );
+    )
+    .catch(err => {
+        res.status(404).json({
+            message: "NOT_FOUND",
+            error: err
+        })
+    })
 }
 
 const getByKeywordAndAreaOfResearch = (req, res, next) => {
@@ -73,13 +95,14 @@ const getByKeywordAndAreaOfResearch = (req, res, next) => {
     ])
     .then(papers => {
         res.status(200).json({
-        message: "Success",
+        message: "SUCCESS",
         data: papers
         });
     })
     .catch(err => {
         res.status(404).json({
-        error: err
+            message: "NOT_FOUND",
+            error: err
         });
     });
 }
@@ -88,12 +111,13 @@ const getByCollegeId = (req, res, next) => {
     Paper.find({college: req.params.collegeId})
     .then(papers => {
         res.status(200).json({
-            message: "Success",
+            message: "SUCCESS",
             data: papers
         })
     })
     .catch(err => {
         res.status(404).json({
+            message: "NOT_FOUND",
             error: err
         })
     })
@@ -103,12 +127,13 @@ const getByUploaderId = (req, res, next) => {
     Paper.find({uploadedBy: req.params.uploaderId})
     .then(papers => {
         res.status(200).json({
-            message: "Success",
+            message: "SUCCESS",
             data: papers
         })
     })
     .catch(err => {
         res.status(404).json({
+            message: "NOT_FOUND",
             error: err
         })
     })
@@ -116,17 +141,21 @@ const getByUploaderId = (req, res, next) => {
 
 const getUnverifiedPapersByCollegeId = (req, res, next) => {
     Paper.find({ college: req.params.collegeId, statusCode: 0 })
-    .then(queries => {
-      res.status(200).json({
-        message: "Success",
-        data: queries
-      });
+    .populate('college')
+    .exec((err,papers) => {
+        if(!err && papers){
+            res.status(200).json({
+                message: "SUCCESS",
+                data: papers
+            });
+        }
+        else{
+            res.status(404).json({
+                message: "NOT_FOUND",
+                error: err
+            });
+        }
     })
-    .catch(err => {
-      res.status(404).json({
-        error: err
-      });
-    });
 }
 
 const getCounts = (req, res, next) => { 
@@ -136,12 +165,13 @@ const getCounts = (req, res, next) => {
     ])
     .then(countsData => {
         res.status(200).json({
-            message: "Success",
+            message: "SUCCESS",
             data: countsData
         });
     })
     .catch(err => {
         res.status(500).json({
+            message: "INTERNAL_SERVER_ERROR",
             error: err
         });
     });
@@ -155,12 +185,13 @@ const getLatestVerifiedPapers = () => {
     ])
     .then(papers => {
         res.status(200).json({
-            message: "Success",
+            message: "SUCCESS",
             data: papers
         });
     })
     .catch(err => {
         res.status(500).json({
+            message: "INTERNAL_SERVER_ERROR",
             error: err
         });
     });
@@ -174,15 +205,15 @@ const updateStatus = (req, res, next) => {
                 $set: {statusCode: req.body.status}
             },
             { new : true },
-            (err, response) => {
+            (err, _) => {
                 if(err){
                 res.status(500).json({
+                    message: "INTERNAL_SERVER_ERROR",
                     error: err
                 });
                 }else{
                 res.status(201).json({
-                    message: "Paper Updated!",
-                    data: response
+                    message: "SUCCESS"
                 });
                 }
             }
@@ -193,20 +224,20 @@ const updateStatus = (req, res, next) => {
         { _id : req.params.id },
         {
             $set: {
-            statusCode: req.body.status,
-            publicationDate: date
+                statusCode: req.body.status,
+                publicationDate: date
             }
         },
         { new : true },
-        (err, response) => {
+        (err, _) => {
             if(err){
             res.status(500).json({
+                message: "INTERNAL_SERVER_ERROR",
                 error: err
             });
             }else{
             res.status(201).json({
-                message: "Paper Updated!",
-                data: response
+                message: "SUCCESS"
             });
             }
         }
@@ -225,12 +256,12 @@ const deleteById = async (req, res, next) => {
             console.log(err)
         })
         res.status(200).json({
-            message: "Deleted Successfully",
-            data: paper
+            message: "SUCCESS"
         });
     })
     .catch(err => {
         res.status(500).json({
+            message: "INTERNAL_SERVER_ERROR",
             error: err
         });
     });
@@ -238,6 +269,7 @@ const deleteById = async (req, res, next) => {
 
 module.exports = {
     upload,
+    getAllPapers,
     getByPaperId,
     getByKeywordAndAreaOfResearch,
     getByCollegeId,

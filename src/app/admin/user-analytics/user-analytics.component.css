@@ -1,0 +1,74 @@
+.analytics{
+    height: 100%;
+    padding-top: 3rem;
+}
+.data-section{
+    width: 60%;
+    margin-top: 1rem;
+    margin-bottom: 3rem;
+    text-align: center;
+}
+
+.category-figures{
+    margin-bottom: 3rem;
+}
+
+.category-figures div{
+    margin: 1rem 1rem;
+}
+
+.category-figures div h2{
+    font-size: 4rem;
+    color: var(--secondary-color);
+}
+.category-figures div h3{
+    font-size: 2rem;
+    color: var(--secondary-color);
+}
+
+
+.total h2{
+    font-size: 5rem;
+    color: var(--secondary-color);
+}
+
+.total h3{
+    font-size: 3rem;
+    color: var(--secondary-color);
+}
+
+.admin h2, .admin h3{
+    color: var(--secondary-color);
+}
+
+.accepted h2, .accepted h3{
+    color: green;
+}
+
+.rejected h2, .rejected h3{
+    color: var(--deep-danger);
+}
+
+.chart-section{
+    margin: 3rem;
+    margin-left: 5rem;
+    text-align: center;
+}
+
+.chart-section img{
+    height: 25rem;
+}
+
+.college-data{
+    margin-top: 2rem;
+}
+
+.college-data h2{
+    font-size: 3rem;
+    color: var(--primary-color);
+}
+
+.college-data h3{
+    font-size: 2rem;
+    color: var(--primary-color);
+}

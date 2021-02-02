@@ -20,23 +20,25 @@ const studentSignup = (req, res, next) => {
             user.save()
             .then(result => {
                 res.status(201).json({
-                    message: 'User Created!',
+                    message: 'SUCCESS',
                     data: result._id
                 });
             })
             .catch(err => {
                 if(err.errors.email.name && err.errors.email.name === "ValidatorError"){
                     res.status(500).json({
-                        error: "EMAIL_ALREADY_EXISTS"
+                        message: "EMAIL_ALREADY_EXISTS"
                     });
                 }
                 res.status(500).json({
+                    message: "INTERNAL_SERVER_ERROR",
                     error: err
                 });
             });
         })
         .catch(err => {
             res.status(500).json({
+                message: "INTERNAL_SERVER_ERROR",
                 error: err
             });
         });
@@ -60,23 +62,25 @@ const spocSignup = (req, res, next) => {
             user.save()
             .then(result => {
                 res.status(201).json({
-                    message: 'User Created!',
+                    message: 'SUCCESS',
                     data: result._id
                 });
             })
             .catch(err => {
                 if(err.errors.email.name && err.errors.email.name === "ValidatorError"){
                     res.status(500).json({
-                        error: "EMAIL_ALREADY_EXISTS"
+                        message: "EMAIL_ALREADY_EXISTS"
                     });
                 }
                 res.status(500).json({
+                    message: "INTERNAL_SERVER_ERROR",
                     error: err
                 });
             });
         })
         .catch(err => {
             res.status(500).json({
+                message: "INTERNAL_SERVER_ERROR",
                 error: err
             });
         });
@@ -100,23 +104,25 @@ const adminSignup = (req, res, next) => {
             user.save()
             .then(result => {
                 res.status(201).json({
-                    message: 'User Created!',
+                    message: 'SUCCESS',
                     data: result._id
                 });
             })
             .catch(err => {
                 if(err.errors.email.name && err.errors.email.name === "ValidatorError"){
                     res.status(500).json({
-                        error: "EMAIL_ALREADY_EXISTS"
+                        message: "EMAIL_ALREADY_EXISTS"
                     });
                 }
                 res.status(500).json({
+                    message: "INTERNAL_SERVER_ERROR",
                     error: err
                 });
             });
         })
         .catch(err => {
             res.status(500).json({
+                message: "INTERNAL_SERVER_ERROR",
                 error: err
             });
         });
@@ -135,18 +141,20 @@ const signupSuperUser = (req, res, next) => {
             su.save()
             .then(result => {
                 res.status(201).json({
-                    message: 'Super User Created!',
+                    message: 'SUCCESS',
                     data: result._id
                 });
             })
             .catch(err => {
                 res.status(500).json({
+                    message: "INTERNAL_SERVER_ERROR",
                     error: err
                 });
             });
         })
         .catch(err => {
             res.status(500).json({
+                message: "INTERNAL_SERVER_ERROR",
                 error: err
             });
         });
@@ -159,7 +167,7 @@ const loginSuperUser = (req, res, next) => {
     .then(su => {
         if(!su){
             return res.status(401).json({
-                error: 'AUTHENTICATION_FAILED'
+                message: 'AUTHENTICATION_FAILED'
             });
         }
         fetchedUser = su;
@@ -168,7 +176,7 @@ const loginSuperUser = (req, res, next) => {
     .then(comparisonResult => {
         if(!comparisonResult){
             return res.status(401).json({
-                error: 'AUTHENTICATION_FAILED'
+                message: 'AUTHENTICATION_FAILED'
             });
         }
         const token = jwt.sign(
@@ -185,7 +193,7 @@ const loginSuperUser = (req, res, next) => {
     })
     .catch(err => {
         return res.status(401).json({
-            error: err
+            message: 'AUTHENTICATION_FAILED'
         })
     });
 }
@@ -199,7 +207,7 @@ const login = (req, res, next) => {
         fUser => {
             if(!fUser){
                 return res.status(401).json({
-                    error: 'AUTHENTICATION_FAILED'
+                    message: 'AUTHENTICATION_FAILED'
                 });
             }
             fetchedUser = fUser;
@@ -209,7 +217,7 @@ const login = (req, res, next) => {
     .then(result => {
         if(!result){
             return res.status(401).json({
-                error: 'AUTHENTICATION_FAILED'
+                message: 'AUTHENTICATION_FAILED'
             });
         }
         const token = jwt.sign(
@@ -229,36 +237,46 @@ const login = (req, res, next) => {
     })
     .catch(err => {
         return res.status(401).json({
-            error: err
+            message: 'AUTHENTICATION_FAILED'
         });
     });
 }
 
 const getStudentsByCollegeId = (req, res, next) => {
     User.find({ college: req.params.collegeId, role: 'student' })
-    .then(students => {
-        res.status(200).json({
-            message: "Success",
-            data: students
-        });
-    })
-    .catch(err => {
-        res.status(500).json({
-            error: err
-        });
-    });
+    .populate('college')
+    .exec(
+        (err, result) => {
+            console.log(err);
+            console.log(result);
+            // if(!err && result){
+                
+            //     res.status(200).json({
+            //         message: "SUCCESS",
+            //         data: result
+            //     });
+            // }
+            // else{
+            //     res.status(500).json({
+            //         message: "INTERNAL_SERVER_ERROR",
+            //         error: err
+            //     });
+            // }
+        }
+    )
 }
 
 const getSPOCs = (req, res, next) => {
     User.find({ role: 'spoc' })
     .then(students => {
         res.status(200).json({
-            message: "Success",
+            message: "SUCCESS",
             data: students
         });
     })
     .catch(err => {
         res.status(500).json({
+            message: "INTERNAL_SERVER_ERROR",
             error: err
         });
     });
@@ -271,12 +289,13 @@ const getCountsByRoles = (req, res, next) => {
     ])
     .then(counts => {
         res.status(200).json({
-            message: "Success",
+            message: "SUCCESS",
             data: counts
         });
     })
     .catch(err => {
         res.status(500).json({
+            message: "INTERNAL_SERVER_ERROR",
             error: err
         });
     });
@@ -293,12 +312,13 @@ const update = (req, res, next) => {
     )
     .then(result => {
         res.status(201).json({
-            message: 'User Updated!',
+            message: 'SUCCESS',
             data: result
         });
     })
     .catch(err => {
         res.status(500).json({
+            message: "INTERNAL_SERVER_ERROR",
             error: err
         });
     });
@@ -309,7 +329,7 @@ const updatePassword = (req, res, next) => {
     .then(fUser => {
         if(!fUser){
             res.status(401).json({
-                error: 'AUTHENTICATION_FAILED'
+                message: 'AUTHENTICATION_FAILED'
             })
         }
         return bcrypt.compare(req.body.oldPassword, fUser.password);
@@ -317,7 +337,7 @@ const updatePassword = (req, res, next) => {
     .then(comparisonResult => {
         if(!comparisonResult){
             return res.status(401).json({
-            error: 'AUTHENTICATION_FAILED'
+                message: 'AUTHENTICATION_FAILED'
             });
         }
         bcrypt.hash(req.body.newPassword, 10)
@@ -330,19 +350,21 @@ const updatePassword = (req, res, next) => {
             )
             .then(() => {
                 res.status(201).json({
-                    message: 'Password Updated!'
+                    message: 'SUCCESS'
                 });
             })
             .catch(err => {
                 res.status(500).json({
-                    error : err
+                    message: "INTERNAL_SERVER_ERROR",
+                    error: err
                 });
             });
         });
     })
     .catch(err => {
         res.status(500).json({
-            error : err
+            message: "INTERNAL_SERVER_ERROR",
+            error: err
         });
     });
 }
@@ -351,11 +373,12 @@ const deleteById = (req, res, next) => {
     User.findByIdAndDelete( {_id: req.params.id})
     .then(() => {
         res.status(200).json({
-            message: "Deleted Successfully"
+            message: "SUCCESS"
         });
     })
     .catch(err => {
         res.status(500).json({
+            message: "INTERNAL_SERVER_ERROR",
             error: err
         });
     });

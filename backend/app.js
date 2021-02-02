@@ -1,5 +1,6 @@
 const express = require('express');
 const path = require('path');
+const cors = require('cors');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
@@ -31,13 +32,25 @@ app.use('/uploads', express.static(path.join('backend/uploads')));
 
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin','*');
-  res.setHeader('Access-Control-Allow-Headers', 'x-www-form-urlencodedOrigin, X-Requested-With, Content-Type, Accept');
-  res.setHeader('Access-Control-Allow-Methods','GET, POST, PUT, UPDATE, DELETE, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'x-www-form-urlencodedOrigin, X-Requested-With, Content-Type, Accept, Origin, X-Auth-Token, X-API-KEY, Access-Control-Request-Method,Access-Control-Request-Headers, Authorization');
+  res.setHeader('Access-Control-Allow-Methods','HEAD, GET, POST, PUT, PATCH, DELETE, OPTIONS');
   next();
 })
+
+var corsOptions = {
+  optionsSuccessStatus: 200
+}
+
+app.use(cors(corsOptions));
+app.options('*',cors(corsOptions));
 
 app.use('/api/v1/users', usersRoutes);
 app.use('/api/v1/papers', papersRoutes);
 app.use('/api/v1/colleges', collegesRoutes);
+app.use('/*', (req, res, next) => {
+  res.status(404).json({
+      message: "ROUTE_NOT_FOUND",
+  });
+});
 
 module.exports = app;
