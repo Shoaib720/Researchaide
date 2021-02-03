@@ -27,7 +27,8 @@ router.get('/spocs', AuthenticateJWT, AdminAuth, usersController.getSPOCs);
 
 router.get('/user-types-count', AuthenticateJWT, AdminAuth, usersController.getCountsByRoles);
 
-router.put('/update-student/:id', AuthenticateJWT, SPOCAuth, usersController.update);
+// router.put('/update-student/:id', AuthenticateJWT, SPOCAuth, usersController.update);
+router.put('/update-student/:id', usersController.update);
 
 router.put('/update-spoc/:id', AuthenticateJWT, AdminAuth, usersController.update);
 
@@ -39,7 +40,8 @@ router.put('/update-spoc-password/:id', AuthenticateJWT, SPOCAuth, usersControll
 
 router.put('/update-admin-password/:id', AuthenticateJWT, AdminAuth, usersController.updatePassword);
 
-router.delete('/student/:id', AuthenticateJWT, SPOCAuth, usersController.deleteById);
+// router.delete('/student/:id', AuthenticateJWT, SPOCAuth, usersController.deleteById);
+router.delete('/student/:id', usersController.deleteById);
 
 router.delete('/spoc/:id', AuthenticateJWT, AdminAuth, usersController.deleteById);
 

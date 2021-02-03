@@ -1,22 +1,44 @@
-<div class="container">
-    <div class="register-user">
-        <form>
-            <div class="name section">
-                <label for="name">Name</label><br>
-                <input type="text" id="name" required>
-            </div>
-            <div class="email section">
-                <label for="email">Email</label><br>
-                <input type="email" id="email" required>
-            </div>
-            <div class="contact section">
-                <label for="contact">Contact</label><br>
-                <input type="text" id="contact" required>
-            </div>
-            
-            <div class="action section">
-                <button class="btn btn-primary">Register</button>
-            </div>
-        </form>
+<div class="background background-absolute">
+    <div class="container">
+        <div class="register-user">
+            <form [formGroup]="form" (ngSubmit)="onRegister()">
+                <div class="error flex" *ngIf="error !== null">
+                    <div class="icon"><img></div>
+                    <div class="message">{{error}}</div>
+                </div>
+                <div class="success flex" *ngIf="showSuccess">
+                    <div class="icon"><img></div>
+                    <div class="message">Registered successfully!</div>
+                </div>
+                <div class="name section">
+                    <label for="fname">First Name</label><br>
+                    <input type="text" id="fname" formControlName="fname" required maxlength="50" autocomplete="off">
+                </div>
+                <div class="name section">
+                    <label for="mname">Middle Name</label><br>
+                    <input type="text" id="mname" formControlName="mname" required maxlength="50" autocomplete="off">
+                </div>
+                <div class="name section">
+                    <label for="lname">Last Name</label><br>
+                    <input type="text" id="lname" formControlName="lname" required maxlength="50" autocomplete="off">
+                </div>
+                <div class="email section">
+                    <label for="email">Email</label><br>
+                    <input type="email" id="email" formControlName="email" required maxlength="50" autocomplete="off">
+                </div>
+                <div class="contact section">
+                    <label for="contact">Contact</label><br>
+                    <input type="text" id="contact" formControlName="contact" required maxlength="10" autocomplete="off">
+                </div>
+                <div class="action section">
+                    <button
+                        type="submit"
+                        class="btn"
+                        [disabled]="!form.valid"
+                        [ngClass]="!form.valid ? 'btn-disable' : 'btn-primary'"
+                    >Register</button>
+                </div>
+            </form>
+        </div>
     </div>
 </div>

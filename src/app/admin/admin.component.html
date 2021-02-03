@@ -1,1 +1,24 @@
-<router-outlet></router-outlet>
+<div class="background">
+    <div class="container">
+        <div class="header flex justify-between">
+            <div class="brand">
+                <h1>Researchaide</h1>
+            </div>
+            <div class="navbar flex">
+                <ul class="level-1-ul flex">
+                    <li><a routerLink="paper-analytics">Paper Analytics</a></li>
+                    <li><a routerLink="user-analytics">User Analytics</a></li>
+                    <li class="drop-down">
+                        Manage SPOCs >
+                        <ul class="level-2-ul">
+                            <li><a routerLink="register-student">Register SPOC</a></li>
+                            <li><a routerLink="manage-student">Manage SPOCs</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <a href="#logout"><img src="../../assets/icons/logout-blue.svg" alt="logout"></a>
+            </div>
+        </div>
+    </div>
+    <router-outlet></router-outlet>
+</div>

@@ -14,6 +14,7 @@
     --danger-light: rgba(218, 40, 40, 0.459);
     --deep-danger: rgb(95, 1, 1);
     --success: rgba(0, 151, 0, 0.788);
+    --success-dark: rgba(0, 92, 0, 0.788);
 }
 
 @font-face{
@@ -34,6 +35,12 @@ body{
     min-height: 100%;
     width: 100%;
     background-color: var(--light);
+}
+
+.background-absolute{
+    position: absolute;
+    top: 4rem;
+    left: 0;
 }
 
 .container{
@@ -86,10 +93,30 @@ body{
 .btn-disable:hover{
     cursor: not-allowed;
 }
+.btn-danger{
+    background-color: var(--danger);
+    color: var(--heaven);
+}
+.btn-danger:hover{
+    background-color: var(--deep-danger);
+    color: var(--heaven);
+}
+.btn-success{
+    background-color: var(--success);
+    color: var(--heaven);
+}
+.btn-success:hover{
+    background-color: var(--success-dark);
+    color: var(--heaven);
+}
 
 a{
     text-decoration: none;
     cursor: pointer;
+}
+
+.navbar{
+    z-index: 1;
 }
 
 .success{

@@ -50,3 +50,19 @@ td a{
     color: var(--primary-color);
     text-decoration: none;
 }
+
+input.ng-invalid{
+    border: 1px solid red;
+}
+
+.no-students{
+    width: 70%;
+    margin:auto;
+    margin-top: 1rem;
+    text-align: center;
+}
+
+.no-students h2{
+    font-size: 3rem;
+    color: var(--secondary-color);
+}

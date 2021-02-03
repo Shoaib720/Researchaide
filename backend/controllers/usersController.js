@@ -12,7 +12,7 @@ const studentSignup = (req, res, next) => {
                 email: req.body.email,
                 name: req.body.name,
                 contact: req.body.contact,
-                college: req.body.collegeId,
+                college: req.body.college,
                 registeredBy: req.body.registeredBy,
                 role: 'student',
                 password: hash
@@ -25,10 +25,16 @@ const studentSignup = (req, res, next) => {
                 });
             })
             .catch(err => {
-                if(err.errors.email.name && err.errors.email.name === "ValidatorError"){
-                    res.status(500).json({
-                        message: "EMAIL_ALREADY_EXISTS"
-                    });
+                if(err.errors){
+                    if(err.errors.email){
+                        if(err.errors.email.name){
+                            if(err.errors.email.name === "ValidatorError"){
+                                res.status(500).json({
+                                    message: "EMAIL_ALREADY_EXISTS"
+                                });
+                            }
+                        }
+                    }
                 }
                 res.status(500).json({
                     message: "INTERNAL_SERVER_ERROR",
@@ -247,21 +253,20 @@ const getStudentsByCollegeId = (req, res, next) => {
     .populate('college')
     .exec(
         (err, result) => {
-            console.log(err);
-            console.log(result);
-            // if(!err && result){
-                
-            //     res.status(200).json({
-            //         message: "SUCCESS",
-            //         data: result
-            //     });
-            // }
-            // else{
-            //     res.status(500).json({
-            //         message: "INTERNAL_SERVER_ERROR",
-            //         error: err
-            //     });
-            // }
+            // console.log(err);
+            // console.log(result);
+            if(!err && result){
+                res.status(200).json({
+                    message: "SUCCESS",
+                    data: result
+                });
+            }
+            else{
+                res.status(500).json({
+                    message: "INTERNAL_SERVER_ERROR",
+                    error: err
+                });
+            }
         }
     )
 }
@@ -312,8 +317,7 @@ const update = (req, res, next) => {
     )
     .then(result => {
         res.status(201).json({
-            message: 'SUCCESS',
-            data: result
+            message: 'SUCCESS'
         });
     })
     .catch(err => {

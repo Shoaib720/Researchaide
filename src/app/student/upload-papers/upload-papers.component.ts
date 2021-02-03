@@ -75,7 +75,6 @@ export class UploadPapersComponent implements OnInit {
       response => {
         console.log(response);
         this.uploadedPaperId = response.data.paperId;
-        // this.paperService.paperUpdatedEvent.next(response.data);
       },
       err => { this.error = err }
     )

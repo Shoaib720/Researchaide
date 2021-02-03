@@ -1,26 +1,28 @@
-<div class="papers-section">
-    <div class="error flex" *ngIf="error !== null">
-        <div class="icon"><img></div>
-        <div class="message">{{error}}</div>
-    </div>
-    <div class="success flex" *ngIf="isApproved">
-        <div class="icon"><img></div>
-        <div class="message">Approved successfully!</div>
-    </div>
-    <div class="no-papers" *ngIf="papers.length < 1">
-        <h2>Nothing's here!</h2>
-        <h3>You finished it all!</h3>
-    </div>
-    <div class="paper-card" *ngFor="let paper of papers; let i=index">
-        <div class="title">{{paper.title}}</div>
-        <div class="authors">{{paper.authors[0]}}, {{paper.authors[1]}}, {{paper.authors[2]}}</div>
-        <div class="publication" *ngIf="paper.publicationDate != null">Published on: {{paper.publicationDate}}</div>
-        <div class="extras flex justify-between">
-            <div class="status-accepted"></div>
-            <div class="actions flex items-center">
-                <a (click)="onApprove(i)"><img src="../../../assets/icons/tick-green.svg" alt=""></a>
-                <a (click)="onReject(i)"><img src="../../../assets/icons/reject-red.svg" alt=""></a>
-                <a (click)="onView(i)"><img src="../../../assets/icons/view-blue.svg" alt=""></a>
+<div class="background background-absolute">
+    <div class="papers-section">
+        <div class="error flex" *ngIf="error !== null">
+            <div class="icon"><img></div>
+            <div class="message">{{error}}</div>
+        </div>
+        <div class="success flex" *ngIf="isApproved">
+            <div class="icon"><img></div>
+            <div class="message">Approved successfully!</div>
+        </div>
+        <div class="no-papers" *ngIf="papers.length < 1">
+            <h2>Nothing's here!</h2>
+            <h3>You finished it all!</h3>
+        </div>
+        <div class="paper-card" *ngFor="let paper of papers; let i=index">
+            <div class="title">{{paper.title}}</div>
+            <div class="authors">{{paper.authors[0]}}, {{paper.authors[1]}}, {{paper.authors[2]}}</div>
+            <div class="publication" *ngIf="paper.publicationDate != null">Published on: {{paper.publicationDate}}</div>
+            <div class="extras flex justify-between">
+                <div class="status-accepted"></div>
+                <div class="actions flex items-center">
+                    <a (click)="onApprove(i)"><img src="../../../assets/icons/tick-green.svg" alt=""></a>
+                    <a (click)="onReject(i)"><img src="../../../assets/icons/reject-red.svg" alt=""></a>
+                    <a (click)="onView(i)"><img src="../../../assets/icons/view-blue.svg" alt=""></a>
+                </div>
             </div>
         </div>
     </div>

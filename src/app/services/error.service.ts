@@ -30,7 +30,7 @@ export class ErrorService{
                     errorMessage = "You don't have permissions to access this resource. Try logging in, if the problem still persists contact our technical support team!";
                     break;
                 case 'EMAIL_ALREADY_EXISTS':
-                    errorMessage = "This email already exists! Please log in";
+                    errorMessage = "This email already exists!";
                     break;
                 case 'USER_FIELD_MISSING':
                     errorMessage = "Unable to verifiy the user type. If the problem still persists contact our technical support team!";
