@@ -24,9 +24,13 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css"
+              "src/styles.css",
+              "node_modules/anychart/dist/css/anychart-ui.min.css",
+              "node_modules/anychart/dist/fonts/css/anychart-font.min.css"
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/anychart/dist/js/anychart-bundle.min.js"
+            ]
           },
           "configurations": {
             "production": {
