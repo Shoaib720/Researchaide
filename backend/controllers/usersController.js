@@ -60,7 +60,7 @@ const spocSignup = (req, res, next) => {
                 email: req.body.email,
                 name: req.body.name,
                 contact: req.body.contact,
-                college: req.body.collegeId,
+                college: req.body.college,
                 registeredBy: req.body.registeredBy,
                 role: 'spoc',
                 password: hash
@@ -73,10 +73,16 @@ const spocSignup = (req, res, next) => {
                 });
             })
             .catch(err => {
-                if(err.errors.email.name && err.errors.email.name === "ValidatorError"){
-                    res.status(500).json({
-                        message: "EMAIL_ALREADY_EXISTS"
-                    });
+                if(err.errors){
+                    if(err.errors.email){
+                        if(err.errors.email.name){
+                            if(err.errors.email.name === "ValidatorError"){
+                                res.status(500).json({
+                                    message: "EMAIL_ALREADY_EXISTS"
+                                });
+                            }
+                        }
+                    }
                 }
                 res.status(500).json({
                     message: "INTERNAL_SERVER_ERROR",

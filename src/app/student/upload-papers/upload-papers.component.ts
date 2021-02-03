@@ -73,10 +73,13 @@ export class UploadPapersComponent implements OnInit {
     this.paperService.uploadPaper(formData)
     .subscribe(
       response => {
-        console.log(response);
         this.uploadedPaperId = response.data.paperId;
+        setInterval(() => {this.uploadedPaperId = null}, 3000);
       },
-      err => { this.error = err }
+      err => {
+        this.error = err,
+        setInterval(() => {this.error = null}, 5000);
+      }
     )
     this.form.reset();
   }

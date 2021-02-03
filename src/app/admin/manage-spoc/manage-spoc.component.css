@@ -50,3 +50,20 @@ td a{
     color: var(--primary-color);
     text-decoration: none;
 }
+
+input.ng-invalid{
+    border: 1px solid red;
+}
+
+.no-spocs{
+    width: 70%;
+    margin:auto;
+    margin-top: 1rem;
+    text-align: center;
+}
+
+.no-spocs h2{
+    font-size: 3rem;
+    color: var(--secondary-color);
+}
+

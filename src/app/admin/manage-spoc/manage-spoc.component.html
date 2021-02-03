@@ -1,22 +1,49 @@
-<div class="background">
+<div class="background background-absolute" style="top: 6rem;">
     <div class="container">
-        <div class="update-section flex items-center justify-center">
-            <div class="email">
-                <input type="email" placeholder="Email">
-            </div>
-            <div class="name">
-                <input type="text" placeholder="Name">
-            </div>
-            <div class="contact">
-                <input type="text" placeholder="Contact">
-            </div>
-            <div class="actions flex items-center justify-center">
-                <button class="btn btn-primary" [disabled]>Update</button>
-                <button class="btn btn-danger">Delete</button>
-            </div>
+        <div class="error flex" *ngIf="error !== null">
+            <div class="icon"><img></div>
+            <div class="message">{{error}}</div>
         </div>
+        <div class="success flex" *ngIf="showSuccess">
+            <div class="icon"><img></div>
+            <div class="message">Updated successfully!</div>
+        </div>
+        <form [formGroup] = "form" (ngSubmit) = "onUpdate()">
+            <div class="update-section flex items-center justify-center">
+                <div class="email">
+                    <input type="email" placeholder="Email" maxlength="50" required formControlName="email">
+                </div>
+                <div class="name">
+                    <input type="text" placeholder="Name" maxlength="80" required formControlName="name">
+                </div>
+                <div class="contact">
+                    <input type="text" placeholder="Contact" maxlength="10" required formControlName="contact">
+                </div>
+                <div class="actions flex items-center justify-center">
+                    <button
+                        type="submit"
+                        class="btn"
+                        [disabled]="!form.valid"
+                        [ngClass]="!form.valid ? 'btn-disable' : 'btn-success'"
+                    >Update</button>
+                    <button
+                        (click) = "onDelete()"
+                        class="btn"
+                        [disabled]="!form.valid"
+                        [ngClass]="!form.valid ? 'btn-disable' : 'btn-danger'"
+                    >Delete</button>
+                    <button
+                    (click) = "onClear()"
+                        class="btn btn-primary"
+                    >Clear</button>
+                </div>
+            </div>
+        </form>
         <div class="table-section">
-            <table>
+            <div class="no-spocs" *ngIf="spocs.length < 1">
+                <h2>No records found!</h2>
+            </div>
+            <table *ngIf = "spocs.length > 0">
                 <tr>
                     <th>Registration Id</th>
                     <th>Email</th>
@@ -24,215 +51,12 @@
                     <th>Contact</th>
                     <th>Action</th>
                 </tr>
-                <tr>
-                    <td>600ad66596f64e22547dbb42</td>
-                    <td>shoaib12@gmail.com</td>
-                    <td>Shoaib Salim Shaikh</td>
-                    <td>1234567890</td>
-                    <td><a href="#">Update</a></td>
-                </tr>
-                <tr>
-                    <td>600ad66596f64e22547dbb42</td>
-                    <td>shoaib12@gmail.com</td>
-                    <td>Shoaib Salim Shaikh</td>
-                    <td>1234567890</td>
-                    <td><a href="#">Update</a></td>
-                </tr>
-                <tr>
-                    <td>600ad66596f64e22547dbb42</td>
-                    <td>shoaib12@gmail.com</td>
-                    <td>Shoaib Salim Shaikh</td>
-                    <td>1234567890</td>
-                    <td><a href="#">Update</a></td>
-                </tr>
-                <tr>
-                    <td>600ad66596f64e22547dbb42</td>
-                    <td>shoaib12@gmail.com</td>
-                    <td>Shoaib Salim Shaikh</td>
-                    <td>1234567890</td>
-                    <td><a href="#">Update</a></td>
-                </tr>
-                <tr>
-                    <td>600ad66596f64e22547dbb42</td>
-                    <td>shoaib12@gmail.com</td>
-                    <td>Shoaib Salim Shaikh</td>
-                    <td>1234567890</td>
-                    <td><a href="#">Update</a></td>
-                </tr>
-                <tr>
-                    <td>600ad66596f64e22547dbb42</td>
-                    <td>shoaib12@gmail.com</td>
-                    <td>Shoaib Salim Shaikh</td>
-                    <td>1234567890</td>
-                    <td><a href="#">Update</a></td>
-                </tr>
-                <tr>
-                    <td>600ad66596f64e22547dbb42</td>
-                    <td>shoaib12@gmail.com</td>
-                    <td>Shoaib Salim Shaikh</td>
-                    <td>1234567890</td>
-                    <td><a href="#">Update</a></td>
-                </tr>
-                <tr>
-                    <td>600ad66596f64e22547dbb42</td>
-                    <td>shoaib12@gmail.com</td>
-                    <td>Shoaib Salim Shaikh</td>
-                    <td>1234567890</td>
-                    <td><a href="#">Update</a></td>
-                </tr>
-                <tr>
-                    <td>600ad66596f64e22547dbb42</td>
-                    <td>shoaib12@gmail.com</td>
-                    <td>Shoaib Salim Shaikh</td>
-                    <td>1234567890</td>
-                    <td><a href="#">Update</a></td>
-                </tr>
-                <tr>
-                    <td>600ad66596f64e22547dbb42</td>
-                    <td>shoaib12@gmail.com</td>
-                    <td>Shoaib Salim Shaikh</td>
-                    <td>1234567890</td>
-                    <td><a href="#">Update</a></td>
-                </tr>
-                <tr>
-                    <td>600ad66596f64e22547dbb42</td>
-                    <td>shoaib12@gmail.com</td>
-                    <td>Shoaib Salim Shaikh</td>
-                    <td>1234567890</td>
-                    <td><a href="#">Update</a></td>
-                </tr>
-                <tr>
-                    <td>600ad66596f64e22547dbb42</td>
-                    <td>shoaib12@gmail.com</td>
-                    <td>Shoaib Salim Shaikh</td>
-                    <td>1234567890</td>
-                    <td><a href="#">Update</a></td>
-                </tr>
-                <tr>
-                    <td>600ad66596f64e22547dbb42</td>
-                    <td>shoaib12@gmail.com</td>
-                    <td>Shoaib Salim Shaikh</td>
-                    <td>1234567890</td>
-                    <td><a href="#">Update</a></td>
-                </tr>
-                <tr>
-                    <td>600ad66596f64e22547dbb42</td>
-                    <td>shoaib12@gmail.com</td>
-                    <td>Shoaib Salim Shaikh</td>
-                    <td>1234567890</td>
-                    <td><a href="#">Update</a></td>
-                </tr>
-                <tr>
-                    <td>600ad66596f64e22547dbb42</td>
-                    <td>shoaib12@gmail.com</td>
-                    <td>Shoaib Salim Shaikh</td>
-                    <td>1234567890</td>
-                    <td><a href="#">Update</a></td>
-                </tr>
-                <tr>
-                    <td>600ad66596f64e22547dbb42</td>
-                    <td>shoaib12@gmail.com</td>
-                    <td>Shoaib Salim Shaikh</td>
-                    <td>1234567890</td>
-                    <td><a href="#">Update</a></td>
-                </tr>
-                <tr>
-                    <td>600ad66596f64e22547dbb42</td>
-                    <td>shoaib12@gmail.com</td>
-                    <td>Shoaib Salim Shaikh</td>
-                    <td>1234567890</td>
-                    <td><a href="#">Update</a></td>
-                </tr>
-                <tr>
-                    <td>600ad66596f64e22547dbb42</td>
-                    <td>shoaib12@gmail.com</td>
-                    <td>Shoaib Salim Shaikh</td>
-                    <td>1234567890</td>
-                    <td><a href="#">Update</a></td>
-                </tr>
-                <tr>
-                    <td>600ad66596f64e22547dbb42</td>
-                    <td>shoaib12@gmail.com</td>
-                    <td>Shoaib Salim Shaikh</td>
-                    <td>1234567890</td>
-                    <td><a href="#">Update</a></td>
-                </tr>
-                <tr>
-                    <td>600ad66596f64e22547dbb42</td>
-                    <td>shoaib12@gmail.com</td>
-                    <td>Shoaib Salim Shaikh</td>
-                    <td>1234567890</td>
-                    <td><a href="#">Update</a></td>
-                </tr>
-                <tr>
-                    <td>600ad66596f64e22547dbb42</td>
-                    <td>shoaib12@gmail.com</td>
-                    <td>Shoaib Salim Shaikh</td>
-                    <td>1234567890</td>
-                    <td><a href="#">Update</a></td>
-                </tr>
-                <tr>
-                    <td>600ad66596f64e22547dbb42</td>
-                    <td>shoaib12@gmail.com</td>
-                    <td>Shoaib Salim Shaikh</td>
-                    <td>1234567890</td>
-                    <td><a href="#">Update</a></td>
-                </tr>
-                <tr>
-                    <td>600ad66596f64e22547dbb42</td>
-                    <td>shoaib12@gmail.com</td>
-                    <td>Shoaib Salim Shaikh</td>
-                    <td>1234567890</td>
-                    <td><a href="#">Update</a></td>
-                </tr>
-                <tr>
-                    <td>600ad66596f64e22547dbb42</td>
-                    <td>shoaib12@gmail.com</td>
-                    <td>Shoaib Salim Shaikh</td>
-                    <td>1234567890</td>
-                    <td><a href="#">Update</a></td>
-                </tr>
-                <tr>
-                    <td>600ad66596f64e22547dbb42</td>
-                    <td>shoaib12@gmail.com</td>
-                    <td>Shoaib Salim Shaikh</td>
-                    <td>1234567890</td>
-                    <td><a href="#">Update</a></td>
-                </tr>
-                <tr>
-                    <td>600ad66596f64e22547dbb42</td>
-                    <td>shoaib12@gmail.com</td>
-                    <td>Shoaib Salim Shaikh</td>
-                    <td>1234567890</td>
-                    <td><a href="#">Update</a></td>
-                </tr>
-                <tr>
-                    <td>600ad66596f64e22547dbb42</td>
-                    <td>shoaib12@gmail.com</td>
-                    <td>Shoaib Salim Shaikh</td>
-                    <td>1234567890</td>
-                    <td><a href="#">Update</a></td>
-                </tr>
-                <tr>
-                    <td>600ad66596f64e22547dbb42</td>
-                    <td>shoaib12@gmail.com</td>
-                    <td>Shoaib Salim Shaikh</td>
-                    <td>1234567890</td>
-                    <td><a href="#">Update</a></td>
-                </tr>
-                <tr>
-                    <td>600ad66596f64e22547dbb42</td>
-                    <td>shoaib12@gmail.com</td>
-                    <td>Shoaib Salim Shaikh</td>
-                    <td>1234567890</td>
-                    <td><a href="#">Update</a></td>
-                </tr>
-                <tr>
-                    <td>600ad66596f64e22547dbb42</td>
-                    <td>shoaib12@gmail.com</td>
-                    <td>Shoaib Salim Shaikh</td>
-                    <td>1234567890</td>
-                    <td><a href="#">Update</a></td>
+                <tr *ngFor="let spoc of spocs; let i = index">
+                    <td>{{spoc.spocId}}</td>
+                    <td>{{spoc.email}}</td>
+                    <td>{{spoc.name}}</td>
+                    <td>{{spoc.contact}}</td>
+                    <td><a (click)="onSpocSelected(i)">Select</a></td>
                 </tr>
             </table>
         </div>

@@ -1,33 +1,39 @@
-<div class="background">
+<div class="background background-absolute">
     <div class="container">
+        <div class="error flex" *ngIf="userError !== null">
+            <div class="icon"><img></div>
+            <div class="message">{{userError}}</div>
+        </div>
+        <div class="error flex" *ngIf="collegeError !== null">
+            <div class="icon"><img></div>
+            <div class="message">{{collegeError}}</div>
+        </div>
         <div class="analytics flex items-center justify-between">
             <div class="data-section">
                 <div class="category-figures flex items-center justify-between">
                     <div class="admin">
-                        <h2>124</h2>
+                        <h2>{{admins}}</h2>
                         <h3>Admins</h3>
                     </div>
                     <div class="spoc">
-                        <h2>1876</h2>
+                        <h2>{{spocs}}</h2>
                         <h3>SPOCs</h3>
                     </div>
                     <div class="student">
-                        <h2>124</h2>
+                        <h2>{{students}}</h2>
                         <h3>Students</h3>
                     </div>
                 </div>
                 <div class="total">
-                    <h2>2300</h2>
+                    <h2>{{total}}</h2>
                     <h3>Total Users</h3>
                 </div>
                 <div class="college-data">
-                    <h2>2300</h2>
+                    <h2>{{colleges}}</h2>
                     <h3>Registered Colleges</h3>
                 </div>
             </div>
-            <div class="chart-section">
-                <img src="../../../assets/images/pie_chart.png" alt="chart">
-            </div>
+            <div class="chart-section" #usersPieChart></div>
         </div>
     </div>
 </div>

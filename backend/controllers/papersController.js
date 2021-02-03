@@ -161,9 +161,11 @@ const getUnverifiedPapersByCollegeId = (req, res, next) => {
 const getCounts = (req, res, next) => { 
     Paper.aggregate([
         { $group: { _id: "$statusCode", count: { $sum: 1 } } },
-        { $project: { _id: 0, statusCode: "$_id", count: 1 } }
+        { $project: { _id: 0, statusCode: "$_id", count: 1 } },
+        { $sort: { statusCode: 1 } }
     ])
     .then(countsData => {
+        console.log(countsData);
         res.status(200).json({
             message: "SUCCESS",
             data: countsData
@@ -177,7 +179,7 @@ const getCounts = (req, res, next) => {
     });
 }
 
-const getLatestVerifiedPapers = () => {
+const getLatestVerifiedPapers = (req, res, next) => {
     Paper.aggregate([
         { $match: { statusCode: 2 } },
         { $sort: { publicationDate: -1 } },

@@ -35,9 +35,15 @@ const maxSize = 10 * 1024 * 1024;
 
 const upload = multer({storage: multerStorage, limits: { fileSize: maxSize }});
 
-router.post('/upload', AuthenticateJWT, upload.single('file'), papersController.upload);
+// router.post('/upload', AuthenticateJWT, upload.single('file'), papersController.upload);
+router.post('/upload', upload.single('file'), papersController.upload);
 
 router.get('/', papersController.getAllPapers);
+
+// router.get('/counts', AuthenticateJWT, AdminAuth, papersController.getCounts);
+router.get('/counts', papersController.getCounts);
+
+router.get('/latestVerified', papersController.getLatestVerifiedPapers);
 
 router.get('/:id', papersController.getByPaperId);
 
@@ -50,9 +56,7 @@ router.get('/uploadedBy/:uploaderId', AuthenticateJWT, StudentAuth, papersContro
 // router.get('/unverifiedByCollege/:collegeId', AuthenticateJWT, SPOCAuth, papersController.getUnverifiedPapersByCollegeId);
 router.get('/unverifiedByCollege/:collegeId', papersController.getUnverifiedPapersByCollegeId);
 
-router.get('/counts', AuthenticateJWT, AdminAuth, papersController.getCounts);
 
-router.get('/latestVerified', papersController.getLatestVerifiedPapers);
 
 // router.put('/updateStatus/:id', AuthenticateJWT, SPOCAuth, papersController.updateStatus);
 router.put('/updateStatus/:id', papersController.updateStatus);

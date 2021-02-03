@@ -19,29 +19,6 @@ export class PaperService{
         private errorService: ErrorService
     ){}
 
-    private papers: Paper[] = [
-        // {
-        //     paperId: '600be8a1e9034311d455101e',
-        //     title: 'Test paper',
-        //     keywords : [ 
-        //         "AI", 
-        //         "ML", 
-        //         "Python"
-        //     ],
-        //     areaOfResearch : "Machine Learning",
-        //     authors : [ 
-        //         "Kashif", 
-        //         "Shoaib", 
-        //         "Rajkumar"
-        //     ],
-        //     uploadedBy : "shoaib@gmail.com",
-        //     college: { cid: '5f3f9d42b58452716c44e5eb', name: 'Theem College of Engineering' },
-        //     publicationDate: null,
-        //     path: 'uploads/shoaib_1611393185061.pdf',
-        //     status: 0
-        // },
-    ]
-
     public getVerifiedPapers(){
         return this.http.get<{message: String, data: Paper[]}>(this.URL)
         .pipe(

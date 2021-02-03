@@ -1,29 +1,31 @@
 <div class="background background-absolute">
     <div class="container">
+        <div class="error flex" *ngIf="error !== null">
+            <div class="icon"><img></div>
+            <div class="message">{{error}}</div>
+        </div>
         <div class="analytics flex items-center justify-between">
             <div class="data-section">
                 <div class="category-figures flex items-center justify-between">
                     <div class="under-review">
-                        <h2>124</h2>
+                        <h2>{{waiting}}</h2>
                         <h3>Under Review</h3>
                     </div>
                     <div class="accepted">
-                        <h2>1876</h2>
-                        <h3>Accepted</h3>
+                        <h2>{{approved}}</h2>
+                        <h3>Approved</h3>
                     </div>
                     <div class="rejected">
-                        <h2>124</h2>
+                        <h2>{{rejected}}</h2>
                         <h3>Rejected</h3>
                     </div>
                 </div>
                 <div class="total">
-                    <h2>2300</h2>
+                    <h2>{{total}}</h2>
                     <h3>Total</h3>
                 </div>
             </div>
-            <div class="chart-section">
-                <img src="../../../assets/images/pie_chart.png" alt="chart">
-            </div>
+            <div class="chart-section" #papersPieChart></div>
         </div>
     </div>
 </div>

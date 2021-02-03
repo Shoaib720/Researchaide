@@ -64,6 +64,8 @@
                     <button
                         type="submit"
                         class="btn"
+                        [disabled]="!form.valid || !isInputFileValid"
+                        [ngClass]="!form.valid || !isInputFileValid ? 'btn-disable' : 'btn-primary'"
                     >Upload</button>
                 </div>
             </form>
@@ -71,6 +73,3 @@
     </div>
 </div>
 
-
-<!-- [disabled]="!form.valid || !isInputFileValid"
-[ngClass]="!form.valid || !isInputFileValid ? 'btn-disable' : 'btn-primary'" -->

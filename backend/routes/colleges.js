@@ -4,6 +4,8 @@ const router = express.Router();
 
 router.post('/', collegesController.register);
 
+router.get('/counts', collegesController.getCollegeCount);
+
 router.use('/*', (req, res, next) => {
     res.status(404).json({
         error: "ROUTE_NOT_FOUND",
