@@ -1,0 +1,50 @@
+.level-1-ul{
+    margin-right: 2rem;
+}
+.level-1-ul, .level-2-ul{
+    transition: hover 0.3s ease;
+}
+
+li{
+    list-style: none;
+    color: var(--primary-color);
+}
+
+.level-1-ul li:hover{
+    color: var(--heaven);
+}
+li a{
+    text-decoration: none;
+    color: inherit;
+}
+
+.level-2-ul{
+    display: none;
+}
+
+.level-2-ul li{
+    color: var(--primary-color);
+}
+
+.level-2-ul li:hover{
+    color: var(--heaven);
+}
+
+.level-1-ul li{
+    margin: 1rem;
+}
+
+.drop-down:hover .level-2-ul{
+    display: block;
+}
+.brand h1{
+    color: var(--primary-color);
+    margin-top: 1rem;
+}
+.navbar{
+    z-index: 1;
+}
+.navbar img{
+    margin-top: 1rem;
+    height: 2rem;
+}

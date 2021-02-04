@@ -165,7 +165,6 @@ const getCounts = (req, res, next) => {
         { $sort: { statusCode: 1 } }
     ])
     .then(countsData => {
-        console.log(countsData);
         res.status(200).json({
             message: "SUCCESS",
             data: countsData

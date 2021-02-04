@@ -13,7 +13,8 @@ router.post('/student-signup', usersController.studentSignup);
 // router.post('/spoc-signup', AuthenticateJWT, AdminAuth, usersController.spocSignup);
 router.post('/spoc-signup', usersController.spocSignup);
 
-router.post('/admin-signup', AuthenticateJWT, SUAuth, usersController.adminSignup);
+// router.post('/admin-signup', AuthenticateJWT, SUAuth, usersController.adminSignup);
+router.post('/admin-signup', usersController.adminSignup);
 
 router.post('/su-signup', usersController.signupSuperUser);
 
@@ -27,6 +28,8 @@ router.get('/students-by-college/:collegeId', usersController.getStudentsByColle
 // router.get('/spocs', AuthenticateJWT, AdminAuth, usersController.getSPOCs);
 router.get('/spocs', usersController.getSPOCs);
 
+router.get('/admins', usersController.getAdmins);
+
 // router.get('/counts', AuthenticateJWT, AdminAuth, usersController.getCountsByRoles);
 router.get('/counts', usersController.getCountsByRoles);
 
@@ -36,7 +39,8 @@ router.put('/update-student/:id', usersController.update);
 // router.put('/update-spoc/:id', AuthenticateJWT, AdminAuth, usersController.update);
 router.put('/update-spoc/:id', usersController.update);
 
-router.put('/update-admin/:id', AuthenticateJWT, SUAuth, usersController.update);
+// router.put('/update-admin/:id', AuthenticateJWT, SUAuth, usersController.update);
+router.put('/update-admin/:id', usersController.update);
 
 router.put('/update-student-password/:id', AuthenticateJWT, StudentAuth, usersController.updatePassword);
 

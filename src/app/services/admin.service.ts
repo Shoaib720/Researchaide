@@ -19,6 +19,13 @@ export class AdminService{
         private errorService: ErrorService
     ){}
 
+    public getAdmins(){
+        return this.http.get<{message: String, data: any}>(this.UsersURL + '/admins')
+        .pipe(
+            catchError(this.errorService.handleError)
+        )
+    }
+
     public getPapersCount(){
         return this.http.get<{message: String, data: any}>(`${this.PapersURL}/counts`)
         .pipe(
@@ -35,6 +42,27 @@ export class AdminService{
 
     public getCollegesCount(){
         return this.http.get<{message: String, data: any}>(`${this.CollegesURL}/counts`)
+        .pipe(
+            catchError(this.errorService.handleError)
+        )
+    }
+
+    signupAdmin(admin: any){
+        return this.http.post<{message: String, data: String}>(`${this.UsersURL}/admin-signup`, admin)
+        .pipe(
+            catchError(this.errorService.handleError)
+        )
+    }
+
+    updateAdminData(adminId: String, data: any){
+        return this.http.put<{message: String}>(this.UsersURL + '/update-admin/' + adminId, data)
+        .pipe(
+            catchError(this.errorService.handleError)
+        )
+    }
+
+    deleteAdmin(adminId: String){
+        return this.http.delete<{message: String}>(this.UsersURL + '/admin/' + adminId)
         .pipe(
             catchError(this.errorService.handleError)
         )

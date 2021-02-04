@@ -108,7 +108,7 @@ const adminSignup = (req, res, next) => {
                 email: req.body.email,
                 name: req.body.name,
                 contact: req.body.contact,
-                college: req.body.collegeId,
+                college: req.body.college,
                 registeredBy: req.body.registeredBy,
                 role: 'admin',
                 password: hash
@@ -121,10 +121,16 @@ const adminSignup = (req, res, next) => {
                 });
             })
             .catch(err => {
-                if(err.errors.email.name && err.errors.email.name === "ValidatorError"){
-                    res.status(500).json({
-                        message: "EMAIL_ALREADY_EXISTS"
-                    });
+                if(err.errors){
+                    if(err.errors.email){
+                        if(err.errors.email.name){
+                            if(err.errors.email.name === "ValidatorError"){
+                                res.status(500).json({
+                                    message: "EMAIL_ALREADY_EXISTS"
+                                });
+                            }
+                        }
+                    }
                 }
                 res.status(500).json({
                     message: "INTERNAL_SERVER_ERROR",
@@ -254,13 +260,27 @@ const login = (req, res, next) => {
     });
 }
 
+const getAdmins = (req, res, next) => {
+    User.find({ role: 'admin' })
+    .then(admins => {
+        res.status(200).json({
+            message: "SUCCESS",
+            data: admins
+        });
+    })
+    .catch(err => {
+        res.status(500).json({
+            message: "INTERNAL_SERVER_ERROR",
+            error: err
+        });
+    });
+}
+
 const getStudentsByCollegeId = (req, res, next) => {
     User.find({ college: req.params.collegeId, role: 'student' })
     .populate('college')
     .exec(
         (err, result) => {
-            // console.log(err);
-            // console.log(result);
             if(!err && result){
                 res.status(200).json({
                     message: "SUCCESS",
@@ -279,10 +299,10 @@ const getStudentsByCollegeId = (req, res, next) => {
 
 const getSPOCs = (req, res, next) => {
     User.find({ role: 'spoc' })
-    .then(students => {
+    .then(spocs => {
         res.status(200).json({
             message: "SUCCESS",
-            data: students
+            data: spocs
         });
     })
     .catch(err => {
@@ -402,6 +422,7 @@ module.exports = {
     signupSuperUser,
     loginSuperUser,
     login,
+    getAdmins,
     getStudentsByCollegeId,
     getSPOCs,
     getCountsByRoles,
