@@ -87,9 +87,30 @@ const getByPaperId = (req, res, next) => {
     })
 }
 
-const getByKeywordAndAreaOfResearch = (req, res, next) => {
+const getByKeywords = (req, res, next) => {
     Paper.aggregate([
-        { $match: { 'areaOfResearch':req.params.area, 'keywords':req.params.keyword, 'statusCode': 2 } },
+        { $match: { 'keywords': { $in: req.params.keywords.split(' ') }, 'statusCode': 2 } },
+        { $sort: { 'publicationDate': -1 } },
+        { $limit: 50 }
+    ])
+    .then(papers => {
+        res.status(200).json({
+        message: "SUCCESS",
+        data: papers
+        });
+    })
+    .catch(err => {
+        res.status(404).json({
+            message: "NOT_FOUND",
+            error: err
+        });
+    });
+}
+
+
+const getByAreaOfResearch = (req, res, next) => {
+    Paper.aggregate([
+        { $match: { 'areaOfResearch':req.params.area, 'statusCode': 2 } },
         { $sort: { 'publicationDate': -1 } },
         { $limit: 50 }
     ])
@@ -272,7 +293,8 @@ module.exports = {
     upload,
     getAllPapers,
     getByPaperId,
-    getByKeywordAndAreaOfResearch,
+    getByKeywords,
+    getByAreaOfResearch,
     getByCollegeId,
     getByUploaderId,
     getUnverifiedPapersByCollegeId,

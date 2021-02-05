@@ -33,6 +33,20 @@ export class PaperService{
         )
     }
 
+    getPapersByKeywords(keywords: string){
+        return this.http.get<{message: String, data: Paper[]}>(`${this.URL}/keywords/${keywords}`)
+        .pipe(
+            catchError(this.errorService.handleError)
+        );
+    }
+
+    getPapersByAreaOfResearch(area: string){
+        return this.http.get<{message: String, data: Paper[]}>(`${this.URL}/area/${area}`)
+        .pipe(
+            catchError(this.errorService.handleError)
+        );
+    }
+
     public getUnverifiedPapersByCollegeId(cid: String){
         return this.http.get<{message: String, data: Paper[]}>(`${this.URL}/unverifiedByCollege/${cid}`)
         .pipe(

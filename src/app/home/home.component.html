@@ -5,10 +5,8 @@
     <div class="brand">
         <h1>Researchaide</h1>
     </div>
-    <form [formGroup]='search'>
-        <div class="search flex items-center justify-center">
-            <input type="text" placeholder="Search research papers" formControlName='searchBar'>
-            <img src="../../assets/icons/search-white.svg" alt="search-icon" (click)='onSearch()'>
-        </div>
-    </form>
+    <div class="search flex items-center justify-center">
+        <input type="text" #searchBar>
+        <img src="../../assets/icons/search-white.svg" alt="search-icon" (click)='onSearch()'>
+    </div>
 </div>

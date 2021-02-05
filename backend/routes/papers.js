@@ -47,7 +47,9 @@ router.get('/latestVerified', papersController.getLatestVerifiedPapers);
 
 router.get('/:id', papersController.getByPaperId);
 
-router.get('/keywordAndArea/:keyword/:area', papersController.getByKeywordAndAreaOfResearch);
+router.get('/keywords/:keywords', papersController.getByKeywords);
+
+router.get('/area/:area', papersController.getByAreaOfResearch);
 
 router.get('/college/:collegeId', AuthenticateJWT, papersController.getByCollegeId);
 

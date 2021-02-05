@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 
@@ -11,17 +11,20 @@ export class HomeComponent implements OnInit {
 
   constructor(private router : Router) { }
 
-  search = new FormGroup({
-    searchBar : new FormControl('')
-  });
+  @ViewChild('searchBar', {static: false}) search: ElementRef;
 
   searchText = "";
   ngOnInit(): void {
   }
 
   onSearch() {
-    this.searchText = this.search.value.searchBar;
-    this.router.navigate([`search`,this.searchText]);
+    this.searchText = this.search.nativeElement.value;
+    if(this.searchText === ""){
+      this.search.nativeElement.placeholder = "Please type something here...";
+    }
+    else{
+      this.router.navigate([`search`,this.searchText]);
+    }
   }
 
 }

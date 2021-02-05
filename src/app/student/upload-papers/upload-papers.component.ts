@@ -55,9 +55,13 @@ export class UploadPapersComponent implements OnInit {
 
   onUpload(){
     let authors: string = '';
+    let keywords: string = '';
+    keywords += this.form.value.keywords.split(',').map((keyword: string) => {return keyword.trim().toLowerCase()}) + ',';
+    keywords += this.form.value.title.split(' ').map((keyword: string) => {return keyword.trim().toLowerCase()}) + ',';
+    keywords += this.form.value.areaOfResearch;
     var formData: FormData = new FormData();
     formData.append('title', this.form.value.title);
-    formData.append('keywords', this.form.value.keywords.split(',').map((keyword: string) => {return keyword.trim()}));
+    formData.append('keywords', keywords);
     formData.append('areaOfResearch', this.form.value.areaOfResearch.toString());
     authors += this.form.value.author1Name;
     if(this.form.value.author2Name !== ''){
