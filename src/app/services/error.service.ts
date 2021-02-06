@@ -8,7 +8,6 @@ export class ErrorService{
 
     handleError(error: HttpErrorResponse){
         var errorMessage: String = null;
-        console.log(error)
         if(error.error instanceof ErrorEvent){
             errorMessage = `Client side error: ${error.error}`;
         }

@@ -1,29 +1,55 @@
-import { IAuthResponse } from "./auth-response";
+import { IAuthToken } from "./auth-token";
 
 export class AuthData {
-    public _uid: string;
-    public _email: string;
-    public _name: string;
-    public _role: string;
-    public _college: {
-        _cid: string;
-        _name: string;
-        _regNo: string;
-    } = { _cid: "", _name: "", _regNo: "" };
-    public _token: string;
-    public _expirationDate: Date;
+    private _uid: string;
+    private _email: string;
+    
+    private _name: string;
+    
+    private _role: string;
+    private _cid: string;
+    private _token: string;
+    private _expirationDate: Date;
+
+    public get uid(): string {
+        return this._uid;
+    }
+
+    public get email(): string {
+        return this._email;
+    }
+
+    public get name(): string {
+        return this._name;
+    }
+
+    public get role(): string {
+        return this._role;
+    }
+
+    public get cid(): string {
+        return this._cid;
+    }
+
+    public get token(): string {
+        if(new Date(this._expirationDate) < new Date()){
+            return null;
+        }
+        return this._token;
+    }
+
+    public get expirationDate(): Date {
+        return this._expirationDate;
+    }
 
 
-    constructor(authResponse: IAuthResponse) {
-        this._uid = authResponse.uid;
-        this._email = authResponse.email;
-        this._name = authResponse.name;
-        this._role = authResponse.role;
-        this._college._cid = authResponse.college._id;
-        this._college._name = authResponse.college.name;
-        this._college._regNo = authResponse.college.registrationNo;
-        this._token = authResponse.token;
-        // this._expiresIn = authResponse.expiresIn;
-        this._expirationDate = new Date((new Date().getTime()) + authResponse.expiresIn * 1000);
+    constructor(authToken: IAuthToken, token: string) {
+        this._uid = authToken.uid;
+        this._email = authToken.email;
+        this._name = authToken.name;
+        this._role = authToken.role;
+        this._cid = authToken.cid;
+        this._token = token;
+        this._expirationDate = new Date((new Date().getTime()) + authToken.expiresIn * 1000);
     }
 }

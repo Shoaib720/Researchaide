@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { SuperUserComponent } from './super-user/super-user.component';
@@ -19,6 +19,8 @@ import { StudentModule } from './student/student.module';
 import { SPOCModule } from './spoc/spoc.module';
 import { PaperService } from './services/paper.service';
 import { SuperUserModule } from './super-user/super-user.module';
+import { TokenInterceptorService } from './services/token-interceptor.service';
+import { TokenAuthGuard } from './guards/token-auth.guard';
 
 @NgModule({
   declarations: [
@@ -43,7 +45,15 @@ import { SuperUserModule } from './super-user/super-user.module';
     SPOCModule,
     SuperUserModule
   ],
-  providers: [PaperService],
+  providers: [
+    PaperService, 
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptorService,
+      multi: true
+    },
+    TokenAuthGuard
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

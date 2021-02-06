@@ -1,5 +1,6 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
+import { TokenAuthGuard } from "../guards/token-auth.guard";
 import { PageNotFoundComponent } from "../page-not-found/page-not-found.component";
 import { AdminComponent } from "./admin.component";
 import { ManageSpocComponent } from "./manage-spoc/manage-spoc.component";

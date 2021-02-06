@@ -22,25 +22,25 @@ router.post('/su-login', usersController.loginSuperUser);
 
 router.post('/login', usersController.login);
 
-// router.get('/students-by-college/:collegeId', AuthenticateJWT, SPOCAuth, usersController.getStudentsByCollegeId);
-router.get('/students-by-college/:collegeId', usersController.getStudentsByCollegeId);
+router.get('/students-by-college/:collegeId', AuthenticateJWT, SPOCAuth, usersController.getStudentsByCollegeId);
+// router.get('/students-by-college/:collegeId', usersController.getStudentsByCollegeId);
 
-// router.get('/spocs', AuthenticateJWT, AdminAuth, usersController.getSPOCs);
-router.get('/spocs', usersController.getSPOCs);
+router.get('/spocs', AuthenticateJWT, AdminAuth, usersController.getSPOCs);
+// router.get('/spocs', usersController.getSPOCs);
 
-router.get('/admins', usersController.getAdmins);
+router.get('/admins', AuthenticateJWT, SUAuth, usersController.getAdmins);
 
-// router.get('/counts', AuthenticateJWT, AdminAuth, usersController.getCountsByRoles);
-router.get('/counts', usersController.getCountsByRoles);
+router.get('/counts', AuthenticateJWT, AdminAuth, usersController.getCountsByRoles);
+// router.get('/counts', usersController.getCountsByRoles);
 
-// router.put('/update-student/:id', AuthenticateJWT, SPOCAuth, usersController.update);
-router.put('/update-student/:id', usersController.update);
+router.put('/update-student/:id', AuthenticateJWT, SPOCAuth, usersController.update);
+// router.put('/update-student/:id', usersController.update);
 
-// router.put('/update-spoc/:id', AuthenticateJWT, AdminAuth, usersController.update);
-router.put('/update-spoc/:id', usersController.update);
+router.put('/update-spoc/:id', AuthenticateJWT, AdminAuth, usersController.update);
+// router.put('/update-spoc/:id', usersController.update);
 
-// router.put('/update-admin/:id', AuthenticateJWT, SUAuth, usersController.update);
-router.put('/update-admin/:id', usersController.update);
+router.put('/update-admin/:id', AuthenticateJWT, SUAuth, usersController.update);
+// router.put('/update-admin/:id', usersController.update);
 
 router.put('/update-student-password/:id', AuthenticateJWT, StudentAuth, usersController.updatePassword);
 
@@ -48,11 +48,11 @@ router.put('/update-spoc-password/:id', AuthenticateJWT, SPOCAuth, usersControll
 
 router.put('/update-admin-password/:id', AuthenticateJWT, AdminAuth, usersController.updatePassword);
 
-// router.delete('/student/:id', AuthenticateJWT, SPOCAuth, usersController.deleteById);
-router.delete('/student/:id', usersController.deleteById);
+router.delete('/student/:id', AuthenticateJWT, SPOCAuth, usersController.deleteById);
+// router.delete('/student/:id', usersController.deleteById);
 
-// router.delete('/spoc/:id', AuthenticateJWT, AdminAuth, usersController.deleteById);
-router.delete('/spoc/:id', usersController.deleteById);
+router.delete('/spoc/:id', AuthenticateJWT, AdminAuth, usersController.deleteById);
+// router.delete('/spoc/:id', usersController.deleteById);
 
 router.delete('/admin/:id', AuthenticateJWT, SUAuth, usersController.deleteById);
 

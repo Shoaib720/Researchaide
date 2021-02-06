@@ -35,13 +35,13 @@ const maxSize = 10 * 1024 * 1024;
 
 const upload = multer({storage: multerStorage, limits: { fileSize: maxSize }});
 
-// router.post('/upload', AuthenticateJWT, upload.single('file'), papersController.upload);
-router.post('/upload', upload.single('file'), papersController.upload);
+router.post('/upload', AuthenticateJWT, upload.single('file'), papersController.upload);
+// router.post('/upload', upload.single('file'), papersController.upload);
 
 router.get('/', papersController.getAllPapers);
 
-// router.get('/counts', AuthenticateJWT, AdminAuth, papersController.getCounts);
-router.get('/counts', papersController.getCounts);
+router.get('/counts', AuthenticateJWT, AdminAuth, papersController.getCounts);
+// router.get('/counts', papersController.getCounts);
 
 router.get('/latestVerified', papersController.getLatestVerifiedPapers);
 
@@ -55,13 +55,13 @@ router.get('/college/:collegeId', AuthenticateJWT, papersController.getByCollege
 
 router.get('/uploadedBy/:uploaderId', AuthenticateJWT, StudentAuth, papersController.getByUploaderId);
 
-// router.get('/unverifiedByCollege/:collegeId', AuthenticateJWT, SPOCAuth, papersController.getUnverifiedPapersByCollegeId);
-router.get('/unverifiedByCollege/:collegeId', papersController.getUnverifiedPapersByCollegeId);
+router.get('/unverifiedByCollege/:collegeId', AuthenticateJWT, SPOCAuth, papersController.getUnverifiedPapersByCollegeId);
+// router.get('/unverifiedByCollege/:collegeId', papersController.getUnverifiedPapersByCollegeId);
 
 
 
-// router.put('/updateStatus/:id', AuthenticateJWT, SPOCAuth, papersController.updateStatus);
-router.put('/updateStatus/:id', papersController.updateStatus);
+router.put('/updateStatus/:id', AuthenticateJWT, SPOCAuth, papersController.updateStatus);
+// router.put('/updateStatus/:id', papersController.updateStatus);
 
 router.delete('/:id', AuthenticateJWT, StudentAuth, papersController.deleteById);
 

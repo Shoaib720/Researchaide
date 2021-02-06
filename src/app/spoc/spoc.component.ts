@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-spoc',
@@ -7,9 +8,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SpocComponent implements OnInit {
 
-  constructor() { }
+  constructor(private authService: AuthService) { }
 
   ngOnInit(): void {
+  }
+
+  onLogout(){
+    this.authService.logoutUser();
   }
 
 }

@@ -216,48 +216,91 @@ const loginSuperUser = (req, res, next) => {
         });
 }
 
+// const login = (req, res, next) => {
+//     let fetchedUser;
+//     User.findOne({ email: req.body.email })
+//         .populate('college')
+//         .exec()
+//         .then(
+//             fUser => {
+//                 if (!fUser) {
+//                     return res.status(401).json({
+//                         message: 'AUTHENTICATION_FAILED'
+//                     });
+//                 }
+//                 fetchedUser = fUser;
+//                 return bcrypt.compare(req.body.password, fUser.password);
+//             }
+//         )
+//         .then(result => {
+//             if (!result) {
+//                 return res.status(401).json({
+//                     message: 'AUTHENTICATION_FAILED'
+//                 });
+//             }
+//             const token = jwt.sign(
+//                 { userId: fetchedUser._id, email: fetchedUser.email, collegeId: fetchedUser.college._id, role: fetchedUser.role },
+//                 process.env.JWT_SECRET_KEY,
+//                 { expiresIn: '3h' }
+//             );
+//             res.status(200).json({
+//                 uid: fetchedUser._id,
+//                 email: fetchedUser.email,
+//                 name: fetchedUser.name,
+//                 role: fetchedUser.role,
+//                 college: fetchedUser.college,
+//                 token: token,
+//                 expiresIn: 3600 * 3
+//             });
+//         })
+//         .catch(err => {
+//             return res.status(401).json({
+//                 message: 'AUTHENTICATION_FAILED'
+//             });
+//         });
+// }
+
 const login = (req, res, next) => {
     let fetchedUser;
     User.findOne({ email: req.body.email })
-        .populate('college')
-        .exec()
-        .then(
-            fUser => {
-                if (!fUser) {
-                    return res.status(401).json({
-                        message: 'AUTHENTICATION_FAILED'
-                    });
-                }
-                fetchedUser = fUser;
-                return bcrypt.compare(req.body.password, fUser.password);
-            }
-        )
-        .then(result => {
-            if (!result) {
+    .then(
+        fUser => {
+            if (!fUser) {
                 return res.status(401).json({
                     message: 'AUTHENTICATION_FAILED'
                 });
             }
-            const token = jwt.sign(
-                { userId: fetchedUser._id, email: fetchedUser.email, collegeId: fetchedUser.college, role: fetchedUser.role },
-                process.env.JWT_SECRET_KEY,
-                { expiresIn: '3h' }
-            );
-            res.status(200).json({
+            fetchedUser = fUser;
+            return bcrypt.compare(req.body.password, fUser.password);
+        }
+    )
+    .then(result => {
+        if (!result) {
+            return res.status(401).json({
+                message: 'AUTHENTICATION_FAILED'
+            });
+        }
+        const token = jwt.sign(
+            {
                 uid: fetchedUser._id,
                 email: fetchedUser.email,
                 name: fetchedUser.name,
                 role: fetchedUser.role,
-                college: fetchedUser.college,
-                token: token,
+                cid: fetchedUser.college,
                 expiresIn: 3600 * 3
-            });
-        })
-        .catch(err => {
-            return res.status(401).json({
-                message: 'AUTHENTICATION_FAILED'
-            });
+            },
+            process.env.JWT_SECRET_KEY,
+            { expiresIn: '3h' }
+        );
+        res.status(200).json({
+            data: token
         });
+    })
+    .catch(err => {
+        return res.status(401).json({
+            message: 'AUTHENTICATION_FAILED'
+        });
+    });
 }
 
 const getAdmins = (req, res, next) => {

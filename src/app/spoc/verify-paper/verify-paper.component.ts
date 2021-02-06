@@ -54,7 +54,7 @@ export class VerifyPaperComponent implements OnInit {
 
   onReject(id: number){
     const paperId = this.papers[id].paperId;
-    this.paperService.approvePaper(paperId)
+    this.paperService.rejectPaper(paperId)
     .subscribe(
       () => {
         this.getUnverifiedPapers(this.collegeId);

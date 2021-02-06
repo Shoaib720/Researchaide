@@ -1,6 +1,10 @@
 <div class="container flex items-center justify-center">
     <div class="login-area">
-        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <div class="error flex" *ngIf="error !== null">
+            <div class="icon"><img></div>
+            <div class="message">{{error}}</div>
+        </div>
+        <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
             <div class="close">
                 <a routerLink="/home"><img src="../../assets/icons/reject-blue.svg" alt="close-icon"></a>
             </div>
