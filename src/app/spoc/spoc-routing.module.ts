@@ -1,6 +1,6 @@
 import { NgModule } from "@angular/core";
-import { ReactiveFormsModule } from "@angular/forms";
 import { RouterModule, Routes } from "@angular/router";
+import { ChangePasswordComponent } from "../change-password/change-password.component";
 import { PageNotFoundComponent } from "../page-not-found/page-not-found.component";
 import { ManageStudentComponent } from "./manage-student/manage-student.component";
 import { RegisterStudentComponent } from "./register-student/register-student.component";
@@ -13,6 +13,7 @@ const routes : Routes = [
         { path: 'verify-papers', component: VerifyPaperComponent },
         { path: 'register-student', component: RegisterStudentComponent },
         { path: 'manage-student', component: ManageStudentComponent },
+        { path: 'change-pwd', component: ChangePasswordComponent },
         { path: '**', component: PageNotFoundComponent }
     ]}
 ]

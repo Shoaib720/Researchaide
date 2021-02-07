@@ -33,20 +33,16 @@ router.get('/admins', AuthenticateJWT, SUAuth, usersController.getAdmins);
 router.get('/counts', AuthenticateJWT, AdminAuth, usersController.getCountsByRoles);
 // router.get('/counts', usersController.getCountsByRoles);
 
+router.put('/update-admin/:id', AuthenticateJWT, SUAuth, usersController.update);
+// router.put('/update-admin/:id', usersController.update);
+
+router.put('/update-password', AuthenticateJWT, usersController.updatePassword);
+
 router.put('/update-student/:id', AuthenticateJWT, SPOCAuth, usersController.update);
 // router.put('/update-student/:id', usersController.update);
 
 router.put('/update-spoc/:id', AuthenticateJWT, AdminAuth, usersController.update);
 // router.put('/update-spoc/:id', usersController.update);
-
-router.put('/update-admin/:id', AuthenticateJWT, SUAuth, usersController.update);
-// router.put('/update-admin/:id', usersController.update);
-
-router.put('/update-student-password/:id', AuthenticateJWT, StudentAuth, usersController.updatePassword);
-
-router.put('/update-spoc-password/:id', AuthenticateJWT, SPOCAuth, usersController.updatePassword);
-
-router.put('/update-admin-password/:id', AuthenticateJWT, AdminAuth, usersController.updatePassword);
 
 router.delete('/student/:id', AuthenticateJWT, SPOCAuth, usersController.deleteById);
 // router.delete('/student/:id', usersController.deleteById);

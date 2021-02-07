@@ -398,7 +398,7 @@ const update = (req, res, next) => {
 }
 
 const updatePassword = (req, res, next) => {
-    User.findOne({ _id: req.params.id })
+    User.findOne({ email: req.body.email })
         .then(fUser => {
             if (!fUser) {
                 res.status(401).json({
@@ -416,7 +416,7 @@ const updatePassword = (req, res, next) => {
             bcrypt.hash(req.body.newPassword, 10)
                 .then(hash => {
                     User.updateOne(
-                        { _id: req.params.id },
+                        { email: req.body.email },
                         {
                             password: hash
                         }

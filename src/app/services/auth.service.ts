@@ -75,21 +75,6 @@ export class AuthService{
         this.timer = setTimeout(() => { this.logoutUser() }, duration);
     }
 
-    // handleAuthentication(authRes: IAuthResponse){
-    //     let authData: AuthData = new AuthData(authRes);
-    //     this.loggedUser.next(authData);
-    //     localStorage.setItem('token', JSON.stringify(authData._token));
-    //     if(authData._role === 'admin'){
-    //         this.router.navigate(['/admin']);
-    //     }
-    //     else if(authData._role === 'spoc'){
-    //         this.router.navigate(['/spoc'])
-    //     }
-    //     else if(authData._role === 'student'){
-    //         this.router.navigate(['/student'])
-    //     }
-    //     this.autoLogoutUser(authRes.expiresIn * 1000);
-    // }
     handleAuthentication(token: {data: string}){
         const userData: IAuthToken = jwt_decode(token.data);
         let authData: AuthData = new AuthData(userData, token.data);
@@ -105,6 +90,13 @@ export class AuthService{
             this.router.navigate(['/student'])
         }
         this.autoLogoutUser(userData.expiresIn * 1000);
+    }
+
+    changePassword(credentials: {email: string, oldPassword: string, newPassword: string}){
+        return this.http.put<{message: string}>(`${this.URL}/update-password`, credentials)
+        .pipe(
+            catchError(this.errorService.handleError)
+        )
     }
 
 }

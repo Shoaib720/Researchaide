@@ -13,7 +13,6 @@ import { LoginComponent } from './login/login.component';
 import { AppRoutingModule } from './app-routing.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
-import { ChangePasswordComponent } from './change-password/change-password.component';
 import { AdminModule } from './admin/admin.module';
 import { StudentModule } from './student/student.module';
 import { SPOCModule } from './spoc/spoc.module';
@@ -21,6 +20,7 @@ import { PaperService } from './services/paper.service';
 import { SuperUserModule } from './super-user/super-user.module';
 import { TokenInterceptorService } from './services/token-interceptor.service';
 import { TokenAuthGuard } from './guards/token-auth.guard';
+import { ChangePasswordComponent } from './change-password/change-password.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +33,7 @@ import { TokenAuthGuard } from './guards/token-auth.guard';
     SearchComponent,
     LoginComponent,
     PageNotFoundComponent,
-    ChangePasswordComponent,
+    ChangePasswordComponent
   ],
   imports: [
     BrowserModule,

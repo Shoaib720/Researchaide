@@ -1,5 +1,6 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
+import { ChangePasswordComponent } from "../change-password/change-password.component";
 import { TokenAuthGuard } from "../guards/token-auth.guard";
 import { PageNotFoundComponent } from "../page-not-found/page-not-found.component";
 import { AdminComponent } from "./admin.component";
@@ -15,6 +16,7 @@ const routes: Routes = [
         { path: 'user-analytics', component: UserAnalyticsComponent },
         { path: 'manage-spoc', component: ManageSpocComponent },
         { path: 'register-spoc', component: RegisterSpocComponent },
+        { path: 'change-pwd', component: ChangePasswordComponent },
         { path: '**', component: PageNotFoundComponent }
     ] }
 ]

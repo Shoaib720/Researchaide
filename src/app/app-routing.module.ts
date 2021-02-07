@@ -1,6 +1,6 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
-import { AdminAuthGuard } from "./guards/admin-auth.guard";
+import { ChangePasswordComponent } from "./change-password/change-password.component";
 import { TokenAuthGuard } from "./guards/token-auth.guard";
 import { HomeComponent } from "./home/home.component";
 import { LoginComponent } from "./login/login.component";
@@ -17,6 +17,7 @@ const routes: Routes = [
     { path: 'student', canLoad: [TokenAuthGuard], loadChildren: () => import('./student/student.module').then(m => m.StudentModule) },
     { path: 'spoc', canLoad: [TokenAuthGuard], loadChildren: () => import('./spoc/spoc.module').then(m => m.SPOCModule) },
     { path: 'su', canLoad: [TokenAuthGuard], loadChildren: () => import('./super-user/super-user.module').then(m => m.SuperUserModule) },
+    // { path: 'change-pwd', component: ChangePasswordComponent },
     { path: '**', component: PageNotFoundComponent }
 ]
 
