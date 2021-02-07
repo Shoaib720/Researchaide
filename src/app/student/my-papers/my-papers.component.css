@@ -1,0 +1,67 @@
+.no-papers{
+    width: 70%;
+    margin:auto;
+    margin-top: 1rem;
+    text-align: center;
+}
+
+.no-papers h2{
+    font-size: 3rem;
+    color: var(--secondary-color);
+}
+
+.no-papers h3{
+    margin-top: 1rem;
+    font-size: 2rem;
+    color: var(--secondary-color);
+}
+.paper-card{
+    width: 50%;
+    background-color: var(--heaven);
+    border-radius: 5px;
+    padding: 1rem;
+    margin: auto;
+    margin-top: 1rem;
+}
+
+.title{
+    font-size: 2rem;
+    font-weight: bold;
+}
+.authors{
+    font-size: 1.2rem;
+}
+
+.publication{
+    font-size: 1rem;
+}
+
+.extras{
+    margin-top: 0.5rem;
+}
+
+.status-rejected{
+    color: rgb(165, 21, 21);
+}
+.status-rejected:after{
+    content: 'Rejected'
+}
+
+.status-waiting{
+    color: rgb(199, 199, 30);
+}
+.status-waiting:after{
+    content: 'Under Review'
+}
+
+.status-approved{
+    color: green;
+}
+.status-approved:after{
+    content: 'Approved'
+}
+
+.actions img{
+    height: 1.3rem;
+    margin: 0 0.5rem;
+}

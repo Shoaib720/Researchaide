@@ -33,14 +33,21 @@ export class PaperService{
         )
     }
 
-    getPapersByKeywords(keywords: string){
+    public getPapersByUploader(id: string){
+        return this.http.get<{message: String, data: Paper[]}>(`${this.URL}/uploadedBy/${id}`)
+        .pipe(
+            catchError(this.errorService.handleError)
+        );
+    }
+
+    public getPapersByKeywords(keywords: string){
         return this.http.get<{message: String, data: Paper[]}>(`${this.URL}/keywords/${keywords}`)
         .pipe(
             catchError(this.errorService.handleError)
         );
     }
 
-    getPapersByAreaOfResearch(area: string){
+    public getPapersByAreaOfResearch(area: string){
         return this.http.get<{message: String, data: Paper[]}>(`${this.URL}/area/${area}`)
         .pipe(
             catchError(this.errorService.handleError)

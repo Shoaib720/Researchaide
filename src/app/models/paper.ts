@@ -1,19 +1,15 @@
 
 export class Paper{
 
-    paperId : String;
-    title : String;
-    keywords : String[];
-    areaOfResearch : String;
-    authors: String[];
-    uploadedBy: String;
-    college: {
-        cid: String,
-        name: String,
-        regNo: String
-    } = {cid: "", name: "", regNo: ""};
+    paperId : string;
+    title : string;
+    keywords : string[];
+    areaOfResearch : string;
+    authors: string[];
+    uploadedBy: string;
+    cid: string
     publicationDate: Date;
-    path: String;
+    path: string;
     status: Number 
 
     constructor(paperApiResponse: any){
@@ -23,9 +19,7 @@ export class Paper{
         this.areaOfResearch = paperApiResponse.areaOfResearch;
         this.authors = paperApiResponse.authors;
         this.uploadedBy = paperApiResponse.uploadedBy;
-        this.college.cid = paperApiResponse.college._id;
-        this.college.name = paperApiResponse.college.name;
-        this.college.regNo = paperApiResponse.college.registrationNo;
+        this.cid = paperApiResponse.college;
         this.publicationDate = paperApiResponse.publicationDate;
         this.path = paperApiResponse.path;
         this.status = paperApiResponse.statusCode;

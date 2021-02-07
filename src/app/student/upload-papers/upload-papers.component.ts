@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { AuthService } from 'src/app/services/auth.service';
 import { PaperService } from 'src/app/services/paper.service';
 
 @Component({
@@ -10,7 +11,8 @@ import { PaperService } from 'src/app/services/paper.service';
 export class UploadPapersComponent implements OnInit {
 
   constructor(
-    private paperService: PaperService
+    private paperService: PaperService,
+    private authService: AuthService
   ) { }
 
   filePickerError: String = null;
@@ -71,8 +73,8 @@ export class UploadPapersComponent implements OnInit {
       authors += ',' + this.form.value.author3Name;
     }
     formData.append('authors', authors)
-    formData.append('uploadedBy', "shoaib@gmail.com"),
-    formData.append('college', '5f3f9d42b58452716c44e5eb'),
+    formData.append('uploadedBy', this.authService.loggedUser.value.email),
+    formData.append('college', this.authService.loggedUser.value.cid),
     formData.append('file', this.form.value.file);
     this.paperService.uploadPaper(formData)
     .subscribe(

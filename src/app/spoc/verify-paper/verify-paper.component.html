@@ -14,7 +14,7 @@
         </div>
         <div class="paper-card" *ngFor="let paper of papers; let i=index">
             <div class="title">{{paper.title}}</div>
-            <div class="authors">{{paper.authors[0]}}, {{paper.authors[1]}}, {{paper.authors[2]}}</div>
+            <div class="authors"><span>{{paper.authors[0]}}</span><span *ngIf="paper.authors[1] !== 'null'">, {{paper.authors[1]}}</span><span *ngIf="paper.authors[2] !== 'null'">, {{paper.authors[2]}}</span></div>
             <div class="publication" *ngIf="paper.publicationDate != null">Published on: {{paper.publicationDate}}</div>
             <div class="extras flex justify-between">
                 <div class="status-accepted"></div>

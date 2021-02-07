@@ -53,7 +53,7 @@ router.get('/area/:area', papersController.getByAreaOfResearch);
 
 router.get('/college/:collegeId', AuthenticateJWT, papersController.getByCollegeId);
 
-router.get('/uploadedBy/:uploaderId', AuthenticateJWT, StudentAuth, papersController.getByUploaderId);
+router.get('/uploadedBy/:email', AuthenticateJWT, StudentAuth, papersController.getByUploaderEmail);
 
 router.get('/unverifiedByCollege/:collegeId', AuthenticateJWT, SPOCAuth, papersController.getUnverifiedPapersByCollegeId);
 // router.get('/unverifiedByCollege/:collegeId', papersController.getUnverifiedPapersByCollegeId);

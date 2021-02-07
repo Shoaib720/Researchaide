@@ -144,8 +144,8 @@ const getByCollegeId = (req, res, next) => {
     })
 }
 
-const getByUploaderId = (req, res, next) => {
-    Paper.find({uploadedBy: req.params.uploaderId})
+const getByUploaderEmail = (req, res, next) => {
+    Paper.find({uploadedBy: req.params.email})
     .then(papers => {
         res.status(200).json({
             message: "SUCCESS",
@@ -296,7 +296,7 @@ module.exports = {
     getByKeywords,
     getByAreaOfResearch,
     getByCollegeId,
-    getByUploaderId,
+    getByUploaderEmail,
     getUnverifiedPapersByCollegeId,
     getCounts,
     getLatestVerifiedPapers,
