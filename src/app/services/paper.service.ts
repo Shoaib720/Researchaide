@@ -5,7 +5,7 @@ import { Subject, BehaviorSubject } from "rxjs";
 import { Paper } from "../models/paper";
 import { ErrorService } from "./error.service";
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 
 export class PaperService{
 
