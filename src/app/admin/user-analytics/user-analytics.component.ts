@@ -1,5 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { AdminService } from 'src/app/services/admin.service';
+import { CollegeService } from 'src/app/services/college.service';
 
 @Component({
   selector: 'app-user-analytics',
@@ -8,7 +9,10 @@ import { AdminService } from 'src/app/services/admin.service';
 })
 export class UserAnalyticsComponent implements OnInit {
 
-  constructor(private adminService: AdminService) { }
+  constructor(
+    private adminService: AdminService,
+    private collegeService: CollegeService
+  ) { }
   
   @ViewChild('usersPieChart', {static: false}) chartContainer: ElementRef;
   pieChart: anychart.charts.Pie = null;
@@ -32,7 +36,7 @@ export class UserAnalyticsComponent implements OnInit {
         setInterval(() => {this.userError = null}, 5000);
       }
     )
-    this.adminService.getCollegesCount()
+    this.collegeService.getCollegesCount()
     .subscribe(
       response => { this.colleges = response.data[0].count },
       err => {

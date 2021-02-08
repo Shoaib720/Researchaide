@@ -1,4 +1,4 @@
-.section input{
+.section input, .section select{
     height: 1.8rem;
     width: 100%;
     border: 2px solid var(--secondary-color);

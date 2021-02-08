@@ -6,13 +6,21 @@ import { ManageSpocComponent } from "./manage-spoc/manage-spoc.component";
 import { PaperAnalyticsComponent } from "./paper-analytics/paper-analytics.component";
 import { RegisterSpocComponent } from "./register-spoc/register-spoc.component";
 import { UserAnalyticsComponent } from "./user-analytics/user-analytics.component";
+import { ManageAdminsComponent } from './manage-admins/manage-admins.component';
+import { RegisterAdminComponent } from './register-admin/register-admin.component';
+import { RegisterCollegeComponent } from './register-college/register-college.component';
+import { ManageCollegesComponent } from './manage-colleges/manage-colleges.component';
 
 @NgModule({
     declarations: [
         ManageSpocComponent,
         PaperAnalyticsComponent,
         UserAnalyticsComponent,
-        RegisterSpocComponent
+        RegisterSpocComponent,
+        ManageAdminsComponent,
+        RegisterAdminComponent,
+        RegisterCollegeComponent,
+        ManageCollegesComponent
     ],
     imports: [
         CommonModule,

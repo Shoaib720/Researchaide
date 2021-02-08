@@ -43,6 +43,7 @@ li a{
 }
 .navbar{
     z-index: 1;
+    margin-top: 0.8rem;
 }
 .navbar img{
     margin-top: 1rem;

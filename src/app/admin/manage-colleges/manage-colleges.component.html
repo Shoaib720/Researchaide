@@ -10,14 +10,11 @@
         </div>
         <form [formGroup] = "form" (ngSubmit) = "onUpdate()">
             <div class="update-section flex items-center justify-center">
-                <div class="email">
-                    <input type="email" placeholder="Email" maxlength="50" required formControlName="email">
-                </div>
                 <div class="name">
-                    <input type="text" placeholder="Name" maxlength="80" required formControlName="name">
+                    <input type="text" placeholder="College Name" maxlength="80" required formControlName="name">
                 </div>
-                <div class="contact">
-                    <input type="text" placeholder="Contact" maxlength="10" required formControlName="contact">
+                <div class="regNo">
+                    <input type="text" placeholder="Registration Number" maxlength="50" required formControlName="regNo">
                 </div>
                 <div class="actions flex items-center justify-center">
                     <button
@@ -40,25 +37,21 @@
             </div>
         </form>
         <div class="table-section">
-            <div class="no-spocs" *ngIf="spocs.length < 1">
+            <div class="no-colleges" *ngIf="colleges.length < 1">
                 <h2>No records found!</h2>
             </div>
-            <table *ngIf = "spocs.length > 0">
+            <table *ngIf = "colleges.length > 0">
                 <tr>
-                    <th>Registration Id</th>
-                    <th>Email</th>
-                    <th>Name</th>
-                    <th>Contact</th>
-                    <th>College</th>
+                    <th>College Id</th>
+                    <th>College Name</th>
+                    <th>Registration Number</th>
                     <th>Action</th>
                 </tr>
-                <tr *ngFor="let spoc of spocs; let i = index">
-                    <td>{{spoc.spocId}}</td>
-                    <td>{{spoc.email}}</td>
-                    <td>{{spoc.name}}</td>
-                    <td>{{spoc.contact}}</td>
-                    <td>{{spoc.college.name}}</td>
-                    <td><a (click)="onSpocSelected(i)">Select</a></td>
+                <tr *ngFor="let college of colleges; let i = index">
+                    <td>{{college.cid}}</td>
+                    <td>{{college.name}}</td>
+                    <td>{{college.regNo}}</td>
+                    <td><a (click)="onCollegeSelected(i)">Select</a></td>
                 </tr>
             </table>
         </div>

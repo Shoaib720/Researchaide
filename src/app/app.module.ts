@@ -21,6 +21,7 @@ import { SuperUserModule } from './super-user/super-user.module';
 import { TokenInterceptorService } from './services/token-interceptor.service';
 import { TokenAuthGuard } from './guards/token-auth.guard';
 import { ChangePasswordComponent } from './change-password/change-password.component';
+import { RegisterFirstAdminComponent } from './register-first-admin/register-first-admin.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { ChangePasswordComponent } from './change-password/change-password.compo
     SearchComponent,
     LoginComponent,
     PageNotFoundComponent,
-    ChangePasswordComponent
+    ChangePasswordComponent,
+    RegisterFirstAdminComponent
   ],
   imports: [
     BrowserModule,

@@ -12,7 +12,7 @@
 }
 
 .register-user{
-    padding: 1rem;
+    padding: 3rem;
     text-align: left;
     width: 40%;
     margin: auto;
@@ -20,4 +20,15 @@
 
 .action{
     text-align: center;
+}
+
+.brand h1{
+    color: var(--secondary-color);
+    margin-top: 1rem;
+}
+
+.brand h1 a{
+    text-decoration: none;
+    color: var(--secondary-color);
+    cursor: pointer;
 }

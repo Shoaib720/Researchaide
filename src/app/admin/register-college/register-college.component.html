@@ -1,0 +1,32 @@
+<div class="background background-absolute" style="top: 6rem;">
+    <div class="container">
+        <div class="register-college">
+            <form [formGroup]="form" (ngSubmit)="onRegister()">
+                <div class="error flex" *ngIf="error !== null">
+                    <div class="icon"><img></div>
+                    <div class="message">{{error}}</div>
+                </div>
+                <div class="success flex" *ngIf="showSuccess">
+                    <div class="icon"><img></div>
+                    <div class="message">Registered successfully!</div>
+                </div>
+                <div class="name section">
+                    <label for="name">College Name</label><br>
+                    <input type="text" id="name" formControlName="name" required maxlength="50" autocomplete="off">
+                </div>
+                <div class="regNo section">
+                    <label for="regNo">College Registration Number</label><br>
+                    <input type="text" id="regNo" formControlName="regNo" required maxlength="50" autocomplete="off">
+                </div>
+                <div class="action section">
+                    <button
+                        type="submit"
+                        class="btn"
+                        [disabled]="!form.valid"
+                        [ngClass]="!form.valid ? 'btn-disable' : 'btn-primary'"
+                    >Register</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

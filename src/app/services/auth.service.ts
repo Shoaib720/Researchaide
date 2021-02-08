@@ -45,8 +45,6 @@ export class AuthService{
         this.router.navigate(['/login']);
     }
 
-    loginSuperUser(){}
-
     autoLoginUser(){
         if(localStorage.getItem('token')){
             const token: IAuthToken = jwt_decode(localStorage.getItem('token'));
@@ -90,6 +88,13 @@ export class AuthService{
             this.router.navigate(['/student'])
         }
         this.autoLogoutUser(userData.expiresIn * 1000);
+    }
+
+    loginSuperUser(credentials: { email: string, password: string }){
+        return this.http.post<{data: string}>(`${this.URL}/su-login`, credentials)
+        .pipe(
+            catchError(this.errorService.handleError)
+        )
     }
 
     changePassword(credentials: {email: string, oldPassword: string, newPassword: string}){

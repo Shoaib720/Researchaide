@@ -30,26 +30,6 @@
                     <label for="contact">Contact</label><br>
                     <input type="text" id="contact" formControlName="contact" required maxlength="10" autocomplete="off">
                 </div>
-                <div class="college section">
-                    <label for="college-drop-down">Select College</label><br>
-                    <select name="college-drop-down" id="college-drop-down" formControlName="college" required>
-                        <option value="" disabled selected hidden>Select College</option>
-                        <option *ngFor="let college of colleges" value="{{college.cid}}" >{{college.name}}</option>
-                        <!-- <option value="business">Business & Management</option>
-                        <option value="computer">Comp. Science & I.T</option>
-                        <option value="education">Education</option>
-                        <option value="environment">Environment</option>
-                        <option value="agriculture">Agriculture</option>
-                        <option value="science">Physical Sciences</option>
-                        <option value="law">Government & Law</option>
-                        <option value="information">Library & Information Science</option>
-                        <option value="media">Media & Communication</option>
-                        <option value="medical">Medical & Life Science</option>
-                        <option value="engineering">Engineering</option>
-                        <option value="security">Security & Forensics</option>
-                        <option value="social">Social Sciences & Humanities</option> -->
-                    </select>
-                </div>
                 <div class="action section">
                     <button
                         type="submit"

@@ -1,22 +1,22 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { SPOC } from 'src/app/models/spoc';
-import { SpocService } from 'src/app/services/spoc.service';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { Admin } from 'src/app/models/admin';
+import { AdminService } from 'src/app/services/admin.service';
 
 @Component({
-  selector: 'app-manage-spoc',
-  templateUrl: './manage-spoc.component.html',
-  styleUrls: ['./manage-spoc.component.css']
+  selector: 'app-manage-admins',
+  templateUrl: './manage-admins.component.html',
+  styleUrls: ['./manage-admins.component.css']
 })
-export class ManageSpocComponent implements OnInit {
+export class ManageAdminsComponent implements OnInit {
 
   form: FormGroup;
   error: String = null;
   showSuccess: boolean = false;
-  private selectedSpoc: SPOC = null;
-  spocs: SPOC[] = [];
+  private selectedAdmin: Admin = null;
+  admins: Admin[] = [];
 
-  constructor(private spocService: SpocService) { }
+  constructor(private adminService: AdminService) { }
 
   ngOnInit(): void {
     this.form = new FormGroup({
@@ -24,17 +24,17 @@ export class ManageSpocComponent implements OnInit {
       name: new FormControl(null, { validators: [Validators.required, Validators.maxLength(80)]}),
       contact: new FormControl(null, {validators: [Validators.required, Validators.pattern(/^\d{10}$/), Validators.maxLength(50)]})
     });
-    this.fetchSpocData();
+    this.fetchAdminData();
   }
 
-  private fetchSpocData(){
-    this.spocService.getSpocs()
+  private fetchAdminData(){
+    this.adminService.getAdmins()
     .subscribe(
       response => {
-        const _spocs : SPOC[] = [];
-        response.data.forEach(spoc => { _spocs.push(new SPOC(spoc)) });
-        this.spocs = [];
-        this.spocs.push(..._spocs);
+        const _admins : Admin[] = [];
+        response.data.forEach(admin => { _admins.push(new Admin(admin)) });
+        this.admins = [];
+        this.admins.push(..._admins);
       },
       err => {
         this.error = err;
@@ -49,13 +49,13 @@ export class ManageSpocComponent implements OnInit {
       name: this.form.value.name,
       contact: this.form.value.contact
     }
-    this.spocService.updateSpocData(this.selectedSpoc.spocId, data)
+    this.adminService.updateAdminData(this.selectedAdmin.adminId, data)
     .subscribe(
       () => {
         this.showSuccess = true;
         setInterval(() => {this.showSuccess = false}, 2000);
-        this.fetchSpocData();
-        this.selectedSpoc = null;
+        this.fetchAdminData();
+        this.selectedAdmin = null;
         this.form.reset();
       },
       err => {
@@ -65,24 +65,24 @@ export class ManageSpocComponent implements OnInit {
     )
   }
 
-  onSpocSelected(id: number){
-    const spoc= this.spocs[id];
-    this.selectedSpoc = spoc;
+  onAdminSelected(id: number){
+    const admin= this.admins[id];
+    this.selectedAdmin = admin;
     this.form.setValue({
-      email : spoc.email,
-      name: spoc.name,
-      contact: spoc.contact
+      email : admin.email,
+      name: admin.name,
+      contact: admin.contact
     });
   }
 
   onDelete(){
-    this.spocService.deleteSpoc(this.selectedSpoc.spocId)
+    this.adminService.deleteAdmin(this.selectedAdmin.adminId)
     .subscribe(
       () => {
         this.showSuccess = true;
         setInterval(() => {this.showSuccess = false}, 2000);
-        this.fetchSpocData();
-        this.selectedSpoc = null;
+        this.fetchAdminData();
+        this.selectedAdmin = null;
         this.form.reset();
       },
       err => {
@@ -94,6 +94,6 @@ export class ManageSpocComponent implements OnInit {
 
   onClear(){
     this.form.reset();
-    this.selectedSpoc = null;
+    this.selectedAdmin = null;
   }
 }

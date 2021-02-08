@@ -12,9 +12,11 @@ export class SPOC{
         this.email = userApiResponse.email;
         this.name = userApiResponse.name;
         this.contact = userApiResponse.contact;
-        this.college.cid = userApiResponse.college._id;
-        this.college.name = userApiResponse.college.name;
-        this.college.regNo = userApiResponse.college.registrationNo;
+        if(userApiResponse.college){
+            this.college.cid = userApiResponse.college._id;
+            this.college.name = userApiResponse.college.name;
+            this.college.regNo = userApiResponse.college.registrationNo;
+        }
         this.registeredBy = userApiResponse.registeredBy;
     }
 }

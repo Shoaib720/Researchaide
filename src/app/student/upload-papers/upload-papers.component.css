@@ -16,9 +16,9 @@
 }
 
 .section input, .section select{
-    height: 1.5rem;
+    height: 1.8rem;
     width: 100%;
-    border: none;
+    border: 2px solid var(--secondary-color);
     outline: none;
     font-size: 1rem;
 }

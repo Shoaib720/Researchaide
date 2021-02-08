@@ -40,29 +40,29 @@ export class AdminService{
         )
     }
 
-    public getCollegesCount(){
-        return this.http.get<{message: String, data: any}>(`${this.CollegesURL}/counts`)
-        .pipe(
-            catchError(this.errorService.handleError)
-        )
-    }
-
-    signupAdmin(admin: any){
+    public signupAdmin(admin: any){
         return this.http.post<{message: String, data: String}>(`${this.UsersURL}/admin-signup`, admin)
         .pipe(
             catchError(this.errorService.handleError)
         )
     }
 
-    updateAdminData(adminId: String, data: any){
+    public updateAdminData(adminId: String, data: any){
         return this.http.put<{message: String}>(this.UsersURL + '/update-admin/' + adminId, data)
         .pipe(
             catchError(this.errorService.handleError)
         )
     }
 
-    deleteAdmin(adminId: String){
+    public deleteAdmin(adminId: String){
         return this.http.delete<{message: String}>(this.UsersURL + '/admin/' + adminId)
+        .pipe(
+            catchError(this.errorService.handleError)
+        )
+    }
+
+    public signupFirstAdmin(admin: any){
+        return this.http.post<{message: String, data: String}>(`${this.UsersURL}/first-admin-signup`, admin)
         .pipe(
             catchError(this.errorService.handleError)
         )

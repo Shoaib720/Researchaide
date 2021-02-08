@@ -7,7 +7,7 @@ const userSchema = mongoose.Schema(
         name: {type: String, required: true},
         contact: {type: String, required: true},
         password: {type: String, required: true},
-        college: {type: mongoose.Schema.Types.ObjectId, ref: 'College', required: true},
+        college: {type: mongoose.Schema.Types.ObjectId, ref: 'College'},
         registeredBy: {type: String, default: 'NA'},
         role: {type: String, enum:['admin', 'spoc', 'student'], required: true}
     },

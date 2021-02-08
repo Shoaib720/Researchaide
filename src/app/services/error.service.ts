@@ -8,13 +8,14 @@ export class ErrorService{
 
     handleError(error: HttpErrorResponse){
         var errorMessage: String = null;
+        console.log(error)
         if(error.error instanceof ErrorEvent){
             errorMessage = `Client side error: ${error.error}`;
         }
         else{
             switch(error.error.message){
                 case 'INTERNAL_SERVER_ERROR':
-                    errorMessage = `${error.message}, Please try again later!`;
+                    errorMessage = `Internal Server Error: ${error.message}, Please try again later!`;
                     break;
                 case 'NOT_FOUND':
                     errorMessage = "The resource you are trying to access is not found!";
