@@ -7,8 +7,8 @@
         <div class="spinner" *ngIf="isLoading">
             <mat-spinner></mat-spinner>
         </div>
-        <div class="analytics flex items-center justify-between" *ngIf = "!isLoading">
-            <div class="data-section">
+        <div class="analytics flex items-center justify-between">
+            <div class="data-section" *ngIf = "!isLoading">
                 <div class="category-figures flex items-center justify-between">
                     <div class="under-review">
                         <h2>{{waiting}}</h2>

@@ -279,25 +279,23 @@ const getStudentsByCollegeId = (req, res, next) => {
 }
 
 const getSPOCs = (req, res, next) => {
-    User.aggregate([
-        { $match: { role: 'spoc' } },
-        { $sort: { name: 1 } }
-    ])
-        .populate('college')
-        .exec((err, spocs) => {
-            if(!err && spocs){
-                res.status(200).json({
-                    message: "SUCCESS",
-                    data: spocs
-                });
-            }
-            else{
-                res.status(404).json({
-                    message: "NOT_FOUND",
-                    error: err
-                });
-            }
-        })
+    User.find({ role: 'spoc' })
+    .sort({ name: 1 })
+    .populate('college')
+    .exec((err, spocs) => {
+        if(!err && spocs){
+            res.status(200).json({
+                message: "SUCCESS",
+                data: spocs
+            });
+        }
+        else{
+            res.status(404).json({
+                message: "NOT_FOUND",
+                error: err
+            });
+        }
+    })
 }
 
 const getCountsByRoles = (req, res, next) => {

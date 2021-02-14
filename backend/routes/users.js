@@ -17,7 +17,8 @@ router.post('/login', usersController.login);
 
 router.get('/students-by-college/:collegeId', AuthenticateJWT, SPOCAuth, usersController.getStudentsByCollegeId);
 
-router.get('/spocs', AuthenticateJWT, AdminAuth, usersController.getSPOCs);
+// router.get('/spocs', AuthenticateJWT, AdminAuth, usersController.getSPOCs);
+router.get('/spocs', usersController.getSPOCs);
 
 router.get('/admins', AuthenticateJWT, AdminAuth, usersController.getAdmins);
 
