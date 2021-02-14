@@ -12,6 +12,7 @@ export class ManageSpocComponent implements OnInit {
 
   form: FormGroup;
   error: String = null;
+  isLoading = false;
   showSuccess: boolean = false;
   private selectedSpoc: SPOC = null;
   spocs: SPOC[] = [];
@@ -28,15 +29,18 @@ export class ManageSpocComponent implements OnInit {
   }
 
   private fetchSpocData(){
+    this.isLoading = true;
     this.spocService.getSpocs()
     .subscribe(
       response => {
+        this.isLoading = false;
         const _spocs : SPOC[] = [];
         response.data.forEach(spoc => { _spocs.push(new SPOC(spoc)) });
         this.spocs = [];
         this.spocs.push(..._spocs);
       },
       err => {
+        this.isLoading = false;
         this.error = err;
         setInterval(() => {this.error = null}, 5000);
       }
@@ -49,9 +53,11 @@ export class ManageSpocComponent implements OnInit {
       name: this.form.value.name,
       contact: this.form.value.contact
     }
+    this.isLoading = true;
     this.spocService.updateSpocData(this.selectedSpoc.spocId, data)
     .subscribe(
       () => {
+        this.isLoading = false;
         this.showSuccess = true;
         setInterval(() => {this.showSuccess = false}, 2000);
         this.fetchSpocData();
@@ -59,6 +65,7 @@ export class ManageSpocComponent implements OnInit {
         this.form.reset();
       },
       err => {
+        this.isLoading = false;
         this.error = err;
         setInterval(() => {this.error = null}, 5000);
       }
@@ -76,9 +83,11 @@ export class ManageSpocComponent implements OnInit {
   }
 
   onDelete(){
+    this.isLoading = true;
     this.spocService.deleteSpoc(this.selectedSpoc.spocId)
     .subscribe(
       () => {
+        this.isLoading = false;
         this.showSuccess = true;
         setInterval(() => {this.showSuccess = false}, 2000);
         this.fetchSpocData();
@@ -86,6 +95,7 @@ export class ManageSpocComponent implements OnInit {
         this.form.reset();
       },
       err => {
+        this.isLoading = false;
         this.error = err;
         setInterval(() => {this.error = null}, 5000);
       }

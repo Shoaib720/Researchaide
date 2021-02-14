@@ -13,6 +13,7 @@ export class RegisterFirstAdminComponent implements OnInit {
 
   form: FormGroup;
   error: String = null;
+  isLoading = false;
   showSuccess: boolean = false;
 
   ngOnInit(): void {
@@ -34,15 +35,17 @@ export class RegisterFirstAdminComponent implements OnInit {
       password: this.form.value.contact,
       secretKey: this.form.value.secretKey
     };
-    
+    this.isLoading = true;
     this.adminService.signupFirstAdmin(admin)
     .subscribe(
       () => {
+        this.isLoading = false;
         this.showSuccess = true;
         this.form.reset();
         setInterval(() => {this.showSuccess = false}, 2000);
       },
       err => {
+        this.isLoading = false;
         this.error = err;
         setInterval(() => {this.error = null}, 10000);
       }

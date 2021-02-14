@@ -23,6 +23,9 @@ export class ErrorService{
                 case 'ROUTE_NOT_FOUND':
                     errorMessage = "The route you are trying to access is not found!";
                     break;
+                case 'FILE_DELETION_FAILED':
+                    errorMessage = "Paper data deleted successfully, but unable to delete the file from storage";
+                    break;
                 case 'AUTHENTICATION_FAILED':
                     errorMessage = "Authentication failed. Try logging in, if the problem still persists contact our technical support team!";
                     break;

@@ -1,9 +1,10 @@
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
+import { FormGroup } from '@angular/forms';
 import { Paper } from '../models/paper';
 import { PaperService } from '../services/paper.service';
-import { FormGroup } from '@angular/forms';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-search',
@@ -21,7 +22,8 @@ export class SearchComponent implements OnInit, OnDestroy {
   error: String = null;
   keywordsString: String = null;
   form: FormGroup;
-  private URL = 'http://localhost:3000/api/v1/papers';
+  isLoading: boolean = false;
+  private URL = environment.backendURL + '/papers';
 
   ngOnInit(): void {
     if(this.route.snapshot.params.keywords !== ''){
@@ -37,17 +39,22 @@ export class SearchComponent implements OnInit, OnDestroy {
 
   private retrievePaperSub: Subscription;
   private searchByKeywordsSub: Subscription;
+  private searchByAreaSub: Subscription;
 
   private retrievePapers(){
+    this.isLoading = true;
     this.retrievePaperSub = this.paperService.getVerifiedPapers().subscribe(
       (response: {message: String, data: Paper[]}) => {
         let _papers: Paper[] = [];
         response.data.forEach(paper => { _papers.push(new Paper(paper)) });
         this.papers = [];
         this.papers.push(..._papers);
+        this.isLoading = false;
       },
       error => {
+        this.isLoading = false;
         this.error = error;
+        setInterval(() => { this.error = null }, 5000);
       }
     );
   }
@@ -59,9 +66,11 @@ export class SearchComponent implements OnInit, OnDestroy {
   }
 
   private onSearchByKeywords(keywords: string){
+    this.isLoading = true;
     this.searchByKeywordsSub = this.paperService.getPapersByKeywords(keywords)
       .subscribe(
         response => {
+          this.isLoading = false;
           if(response.data.length !== 0){
             let _papers : Paper[] = [];
             response.data.forEach(paper => { _papers.push(new Paper(paper)) });
@@ -70,6 +79,7 @@ export class SearchComponent implements OnInit, OnDestroy {
           }
         },
         err => {
+          this.isLoading = false;
           this.error = err;
           setInterval(() => { this.error = null }, 5000);
         }
@@ -77,17 +87,32 @@ export class SearchComponent implements OnInit, OnDestroy {
   }
 
   onView(id: number){
-    console.log(this.papers)
     window.open(`${this.URL}/${this.papers[id].paperId}`);
   }
 
   onAreaOfResearchSelected(){
-    console.log(this.areaOfResearch.nativeElement.value)
+    const area = this.areaOfResearch.nativeElement.value;
+    this.searchByAreaSub = this.paperService.getPapersByAreaOfResearch(area)
+    .subscribe(
+      response => {
+        if(response.data.length !== 0){
+          let _papers : Paper[] = [];
+          response.data.forEach(paper => { _papers.push(new Paper(paper)) });
+          this.papers = [];
+          this.papers.push(..._papers);
+        }
+      },
+      err => {
+        this.error = err;
+        setInterval(() => { this.error = null }, 5000);
+      }
+    )
   }
 
   ngOnDestroy(){
     if(this.retrievePaperSub) this.retrievePaperSub.unsubscribe();
     if(this.searchByKeywordsSub) this.searchByKeywordsSub.unsubscribe();
+    if(this.searchByAreaSub) this.searchByAreaSub.unsubscribe();
   }
 
 }

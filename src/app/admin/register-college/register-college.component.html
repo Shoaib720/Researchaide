@@ -1,7 +1,10 @@
 <div class="background background-absolute" style="top: 6rem;">
     <div class="container">
         <div class="register-college">
-            <form [formGroup]="form" (ngSubmit)="onRegister()">
+            <div class="spinner" *ngIf="isLoading">
+                <mat-spinner></mat-spinner>
+            </div>
+            <form [formGroup]="form" (ngSubmit)="onRegister()" *ngIf = "!isLoading">
                 <div class="error flex" *ngIf="error !== null">
                     <div class="icon"><img></div>
                     <div class="message">{{error}}</div>

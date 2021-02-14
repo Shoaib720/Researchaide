@@ -11,6 +11,7 @@ import { AuthService } from '../services/auth.service';
 export class LoginComponent implements OnInit, OnDestroy {
 
   error: string = null;
+  isLoading = false;
 
   private loginSub: Subscription;
 
@@ -34,12 +35,15 @@ export class LoginComponent implements OnInit, OnDestroy {
     else if(this.loginForm.valid){
       const email: string = this.loginForm.value.email;
       const password: string = this.loginForm.value.password;
-      // const credentials = { email, password };
-      // this.loginSub = this.authService.loginUser(credentials)
+      this.isLoading = true;
       this.loginSub = this.authService.loginUser({email, password})
       .subscribe(
-        response => { this.authService.handleAuthentication(response) },
+        response => { 
+          this.authService.handleAuthentication(response)
+          this.isLoading = false;
+        },
         err => {
+          this.isLoading = false;
           this.error = err;
           setInterval(() => {this.error = null}, 5000);
         }

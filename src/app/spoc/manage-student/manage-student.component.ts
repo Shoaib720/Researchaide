@@ -16,6 +16,7 @@ export class ManageStudentComponent implements OnInit {
 
   form: FormGroup;
   error: String = null;
+  isLoading = false;
   showSuccess: boolean = false;
   private selectedStudent: Student = null;
   students: Student[] = [];
@@ -31,15 +32,18 @@ export class ManageStudentComponent implements OnInit {
   }
 
   private fetchStudentData(){
+    this.isLoading = true;
     this.studentService.getStudentsByCollegeId(this.collegeId)
     .subscribe(
       response => {
+        this.isLoading = false;
         const _students : Student[] = [];
         response.data.forEach(student => { _students.push(new Student(student)) });
         this.students = [];
         this.students.push(..._students);
       },
       err => {
+        this.isLoading = false;
         this.error = err;
         setInterval(() => {this.error = null}, 5000);
       }
@@ -52,9 +56,11 @@ export class ManageStudentComponent implements OnInit {
       name: this.form.value.name,
       contact: this.form.value.contact
     }
+    this.isLoading = true;
     this.studentService.updateStudentData(this.selectedStudent.studentId, data)
     .subscribe(
       () => {
+        this.isLoading = false;
         this.showSuccess = true;
         setInterval(() => {this.showSuccess = false}, 2000);
         this.fetchStudentData();
@@ -62,6 +68,7 @@ export class ManageStudentComponent implements OnInit {
         this.form.reset();
       },
       err => {
+        this.isLoading = false;
         this.error = err;
         setInterval(() => {this.error = null}, 5000);
       }
@@ -79,9 +86,11 @@ export class ManageStudentComponent implements OnInit {
   }
 
   onDelete(){
+    this.isLoading = true;
     this.studentService.deleteStudent(this.selectedStudent.studentId)
     .subscribe(
       () => {
+        this.isLoading = false;
         this.showSuccess = true;
         setInterval(() => {this.showSuccess = false}, 2000);
         this.fetchStudentData();
@@ -89,6 +98,7 @@ export class ManageStudentComponent implements OnInit {
         this.form.reset();
       },
       err => {
+        this.isLoading = false;
         this.error = err;
         setInterval(() => {this.error = null}, 5000);
       }

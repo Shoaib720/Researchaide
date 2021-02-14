@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 import { AppComponent } from './app.component';
 import { SpocComponent } from './spoc/spoc.component';
@@ -19,6 +20,8 @@ import { TokenInterceptorService } from './services/token-interceptor.service';
 import { TokenAuthGuard } from './guards/token-auth.guard';
 import { ChangePasswordComponent } from './change-password/change-password.component';
 import { RegisterFirstAdminComponent } from './register-first-admin/register-first-admin.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AngularMaterialModule } from './angular-material.module';
 
 @NgModule({
   declarations: [
@@ -37,10 +40,12 @@ import { RegisterFirstAdminComponent } from './register-first-admin/register-fir
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
+    AngularMaterialModule,
     HttpClientModule,
     AdminModule,
     StudentModule,
-    SPOCModule
+    SPOCModule,
+    BrowserAnimationsModule
   ],
   providers: [ 
     {

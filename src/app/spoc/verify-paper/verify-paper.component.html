@@ -12,16 +12,21 @@
             <h2>Nothing's here!</h2>
             <h3>You finished it all!</h3>
         </div>
-        <div class="paper-card" *ngFor="let paper of papers; let i=index">
-            <div class="title">{{paper.title}}</div>
-            <div class="authors"><span>{{paper.authors[0]}}</span><span *ngIf="paper.authors[1] !== 'null'">, {{paper.authors[1]}}</span><span *ngIf="paper.authors[2] !== 'null'">, {{paper.authors[2]}}</span></div>
-            <div class="publication" *ngIf="paper.publicationDate != null">Published on: {{paper.publicationDate}}</div>
-            <div class="extras flex justify-between">
-                <div class="status-accepted"></div>
-                <div class="actions flex items-center">
-                    <a (click)="onApprove(i)"><img src="../../../assets/icons/tick-green.svg" alt=""></a>
-                    <a (click)="onReject(i)"><img src="../../../assets/icons/reject-red.svg" alt=""></a>
-                    <a (click)="onView(i)"><img src="../../../assets/icons/view-blue.svg" alt=""></a>
+        <div class="spinner" *ngIf="isLoading">
+            <mat-spinner></mat-spinner>
+        </div>
+        <div *ngIf="!isLoading">
+            <div class="paper-card" *ngFor="let paper of papers; let i=index">
+                <div class="title">{{paper.title}}</div>
+                <div class="authors"><span>{{paper.authors[0]}}</span><span *ngIf="paper.authors[1] !== 'null'">, {{paper.authors[1]}}</span><span *ngIf="paper.authors[2] !== 'null'">, {{paper.authors[2]}}</span></div>
+                <div class="publication" *ngIf="paper.publicationDate != null">Published on: {{paper.publicationDate}}</div>
+                <div class="extras flex justify-between">
+                    <div class="status-accepted"></div>
+                    <div class="actions flex items-center">
+                        <a (click)="onApprove(i)"><img src="../../../assets/icons/tick-green.svg" alt=""></a>
+                        <a (click)="onReject(i)"><img src="../../../assets/icons/reject-red.svg" alt=""></a>
+                        <a (click)="onView(i)"><img src="../../../assets/icons/view-blue.svg" alt=""></a>
+                    </div>
                 </div>
             </div>
         </div>

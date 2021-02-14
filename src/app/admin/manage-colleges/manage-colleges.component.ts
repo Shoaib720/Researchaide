@@ -13,6 +13,7 @@ export class ManageCollegesComponent implements OnInit {
   form: FormGroup;
   error: String = null;
   showSuccess: boolean = false;
+  isLoading: boolean = false;
   private selectedCollege: College = null;
   colleges: College[] = [];
 
@@ -27,15 +28,18 @@ export class ManageCollegesComponent implements OnInit {
   }
 
   private fetchCollegeData(){
+    this.isLoading = true;
     this.collegeService.getColleges()
     .subscribe(
       response => {
+        this.isLoading = false;
         const _colleges : College[] = [];
         response.data.forEach(college => { _colleges.push(new College(college)) });
         this.colleges = [];
         this.colleges.push(..._colleges);
       },
       err => {
+        this.isLoading = false;
         this.error = err;
         setInterval(() => {this.error = null}, 5000);
       }
@@ -47,9 +51,11 @@ export class ManageCollegesComponent implements OnInit {
       name: this.form.value.name,
       regNo: this.form.value.regNo
     }
+    this.isLoading = true;
     this.collegeService.updateCollegeData(this.selectedCollege.cid, data)
     .subscribe(
       () => {
+        this.isLoading = false;
         this.showSuccess = true;
         setInterval(() => {this.showSuccess = false}, 2000);
         this.fetchCollegeData();
@@ -57,6 +63,7 @@ export class ManageCollegesComponent implements OnInit {
         this.form.reset();
       },
       err => {
+        this.isLoading = false;
         this.error = err;
         setInterval(() => {this.error = null}, 5000);
       }
@@ -73,9 +80,11 @@ export class ManageCollegesComponent implements OnInit {
   }
 
   onDelete(){
+    this.isLoading = true;
     this.collegeService.deleteCollege(this.selectedCollege.cid)
     .subscribe(
       () => {
+        this.isLoading = false;
         this.showSuccess = true;
         setInterval(() => {this.showSuccess = false}, 2000);
         this.fetchCollegeData();
@@ -83,6 +92,7 @@ export class ManageCollegesComponent implements OnInit {
         this.form.reset();
       },
       err => {
+        this.isLoading = false;
         this.error = err;
         setInterval(() => {this.error = null}, 5000);
       }

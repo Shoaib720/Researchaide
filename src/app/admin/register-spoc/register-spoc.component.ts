@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { fakeAsync } from '@angular/core/testing';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { College } from 'src/app/models/college';
 import { AuthService } from 'src/app/services/auth.service';
@@ -20,17 +21,25 @@ export class RegisterSpocComponent implements OnInit {
 
   form: FormGroup;
   error: String = null;
+  isLoading = false;
   showSuccess: boolean = false;
   colleges: College[] = [];
 
   ngOnInit(): void {
+    this.isLoading = true;
     this.collegeService.getColleges()
     .subscribe(
       response => {
+        this.isLoading = false;
         const _colleges: College[] = [];
         response.data.forEach(college => { _colleges.push(new College(college)) });
         this.colleges = [];
         this.colleges.push(..._colleges);
+      },
+      err => {
+        this.isLoading = false;
+        this.error = err;
+        setInterval(() => {this.error = null}, 5000);
       }
     )
     this.form = new FormGroup({
@@ -52,15 +61,17 @@ export class RegisterSpocComponent implements OnInit {
       registeredBy: this.authService.loggedUser.value.email,
       password: this.form.value.contact
     };
-    
+    this.isLoading = true;
     this.spocService.signupSpoc(spoc)
     .subscribe(
       () => {
+        this.isLoading = false;
         this.showSuccess = true;
         this.form.reset();
         setInterval(() => {this.showSuccess = false}, 2000);
       },
       err => {
+        this.isLoading = false;
         this.error = err;
         setInterval(() => {this.error = null}, 5000);
       }

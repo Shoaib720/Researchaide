@@ -8,7 +8,10 @@
             <div class="icon"><img></div>
             <div class="message">{{collegeError}}</div>
         </div>
-        <div class="analytics flex items-center justify-between">
+        <div class="spinner" *ngIf="isLoading">
+            <mat-spinner></mat-spinner>
+        </div>
+        <div class="analytics flex items-center justify-between" *ngIf = "!isLoading">
             <div class="data-section">
                 <div class="category-figures flex items-center justify-between">
                     <div class="admin">

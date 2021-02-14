@@ -11,6 +11,7 @@ export class RegisterCollegeComponent implements OnInit {
 
   form: FormGroup;
   error: String = null;
+  isLoading = false;
   showSuccess: boolean = false;
 
   constructor(private collegeService: CollegeService) { }
@@ -27,15 +28,17 @@ export class RegisterCollegeComponent implements OnInit {
       name: this.form.value.name,
       regNo: this.form.value.regNo
     };
-    
+    this.isLoading = true;
     this.collegeService.registerCollege(college)
     .subscribe(
       () => {
+        this.isLoading = false;
         this.showSuccess = true;
         this.form.reset();
         setInterval(() => {this.showSuccess = false}, 2000);
       },
       err => {
+        this.isLoading = false;
         this.error = err;
         setInterval(() => {this.error = null}, 5000);
       }

@@ -130,6 +130,11 @@ const getByAreaOfResearch = (req, res, next) => {
 
 const getByCollegeId = (req, res, next) => {
     Paper.find({college: req.params.collegeId})
+    Paper.aggregate([
+        { $match: { college: req.params.collegeId } },
+        { $sort: { publicationDate: -1 } },
+        { $limit: 50 }
+    ])
     .then(papers => {
         res.status(200).json({
             message: "SUCCESS",
@@ -145,7 +150,11 @@ const getByCollegeId = (req, res, next) => {
 }
 
 const getByUploaderEmail = (req, res, next) => {
-    Paper.find({uploadedBy: req.params.email})
+    Paper.aggregate([
+        { $match: { uploadedBy: req.params.email } },
+        { $sort: { updatedAt: -1 } },
+        { $limit: 50 }
+    ])
     .then(papers => {
         res.status(200).json({
             message: "SUCCESS",
@@ -161,7 +170,11 @@ const getByUploaderEmail = (req, res, next) => {
 }
 
 const getUnverifiedPapersByCollegeId = (req, res, next) => {
-    Paper.find({ college: req.params.collegeId, statusCode: 0 })
+    Paper.aggregate([
+        { $match: { college: req.params.collegeId, statusCode: 0 } },
+        { $sort: { publicationDate: -1 } },
+        { $limit: 50 }
+    ])
     .populate('college')
     .exec((err,papers) => {
         if(!err && papers){
@@ -271,11 +284,16 @@ const deleteById = async (req, res, next) => {
     Paper.findByIdAndDelete({_id: req.params.id})
     .then((paper) => {
         unlinkAsync(paper.path)
-        .then(resp => {
-            console.log(resp)
+        .then(_ => {
+            res.status(200).json({
+                message: "SUCCESS"
+            });
         })
         .catch(err => {
-            console.log(err)
+            res.status(500).json({
+                message: "FILE_DELETION_FAILED",
+                error: err
+            });
         })
         res.status(200).json({
             message: "SUCCESS"

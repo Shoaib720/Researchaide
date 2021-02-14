@@ -154,3 +154,7 @@ a{
     font-size: 0.8rem;
     color: var(--light);
 }
+
+.spinner mat-spinner{
+    margin: auto;
+}

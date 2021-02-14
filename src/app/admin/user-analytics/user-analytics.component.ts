@@ -17,6 +17,7 @@ export class UserAnalyticsComponent implements OnInit {
   @ViewChild('usersPieChart', {static: false}) chartContainer: ElementRef;
   pieChart: anychart.charts.Pie = null;
   private data = [];
+  isLoading = false;
   userError: String = null;
   collegeError: String = null;
   admins: number = 0;
@@ -26,20 +27,28 @@ export class UserAnalyticsComponent implements OnInit {
   colleges: number = 0;
 
   ngOnInit(): void {
+    this.isLoading = true;
     this.adminService.getUsersCount()
     .subscribe(
       response => {
         this.populateChart(response.data)
+        this.isLoading = false;
       },
       err => {
+        this.isLoading = false;
         this.userError = err;
         setInterval(() => {this.userError = null}, 5000);
       }
     )
+    this.isLoading = true;
     this.collegeService.getCollegesCount()
     .subscribe(
-      response => { this.colleges = response.data[0].count },
+      response => {
+        this.isLoading = false;
+        this.colleges = response.data[0].count
+      },
       err => {
+        this.isLoading = false;
         this.collegeError = err;
         setInterval(() => {this.collegeError = null}, 5000);
       }

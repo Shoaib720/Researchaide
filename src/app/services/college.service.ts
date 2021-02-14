@@ -2,11 +2,12 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { catchError } from "rxjs/operators";
 import { ErrorService } from "./error.service";
+import { environment } from "../../environments/environment";
 
 @Injectable({providedIn: 'root'})
 export class CollegeService{
 
-    private URL = "http://localhost:3000/api/v1/colleges"
+    private URL = environment.backendURL + "/colleges"
 
     constructor(
         private http: HttpClient,

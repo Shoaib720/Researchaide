@@ -3,15 +3,16 @@ import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
 import { BehaviorSubject } from "rxjs";
 import { catchError } from "rxjs/operators";
+import jwt_decode from 'jwt-decode';
 import { AuthData } from "../models/auth-data";
 import { IAuthToken } from "../models/auth-token";
 import { ErrorService } from "./error.service";
-import jwt_decode from 'jwt-decode';
+import { environment } from "../../environments/environment";
 
 @Injectable({ providedIn: 'root' })
 export class AuthService{
 
-    private URL = "http://localhost:3000/api/v1/users"
+    private URL = environment.backendURL + "/users"
     loggedUser = new BehaviorSubject<AuthData>(null);
     private timer: any;
     
@@ -25,8 +26,6 @@ export class AuthService{
         if(localStorage.getItem('token')) return true;
         else return false;
     }
-
-    signupSuperUser(){}
 
     loginUser(credentials: { email: string, password: string }){
         return this.http.post<{data: string}>(`${this.URL}/login`, credentials)
@@ -88,13 +87,6 @@ export class AuthService{
             this.router.navigate(['/student'])
         }
         this.autoLogoutUser(userData.expiresIn * 1000);
-    }
-
-    loginSuperUser(credentials: { email: string, password: string }){
-        return this.http.post<{data: string}>(`${this.URL}/su-login`, credentials)
-        .pipe(
-            catchError(this.errorService.handleError)
-        )
     }
 
     changePassword(credentials: {email: string, oldPassword: string, newPassword: string}){

@@ -10,24 +10,30 @@ import { PaperService } from 'src/app/services/paper.service';
 })
 export class PaperAnalyticsComponent implements OnInit {
 
-  constructor(private adminService: AdminService) { }
+  constructor(
+    private paperService: PaperService
+  ) { }
 
   @ViewChild('papersPieChart', {static: false}) chartContainer: ElementRef;
   pieChart: anychart.charts.Pie = null;
   private data = [];
   error: String = null;
+  isLoading = false;
   waiting: number = 0;
   rejected: number = 0;
   approved: number = 0;
   total: number = 0;
 
   ngOnInit(): void {
-    this.adminService.getPapersCount()
+    this.isLoading = true;
+    this.paperService.getPapersCount()
     .subscribe(
       response => {
         this.populateChart(response.data)
+        this.isLoading = false;
       },
       err => {
+        this.isLoading = false;
         this.error = err;
         setInterval(() => {this.error = null}, 5000);
       }
@@ -36,17 +42,17 @@ export class PaperAnalyticsComponent implements OnInit {
 
   private populateChart(data: any){
     data.forEach(element => {
-      if(element.statusCode === this.adminService.WAITING){
+      if(element.statusCode === this.paperService.WAITING){
         this.data.push(['Under Review', element.count]);
         this.waiting = element.count;
         this.total += this.waiting;
       }
-      else if (element.statusCode === this.adminService.APPROVED){
+      else if (element.statusCode === this.paperService.APPROVED){
         this.data.push(['Approved', element.count]);
         this.approved = element.count;
         this.total += this.approved;
       }
-      else if (element.statusCode === this.adminService.REJECTED){
+      else if (element.statusCode === this.paperService.REJECTED){
         this.data.push(['Rejected', element.count]);
         this.rejected = element.count;
         this.total += this.rejected;

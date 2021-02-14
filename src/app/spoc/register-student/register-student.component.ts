@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { AuthService } from 'src/app/services/auth.service';
 import { StudentService } from 'src/app/services/student.service';
 
 @Component({
@@ -9,10 +10,10 @@ import { StudentService } from 'src/app/services/student.service';
 })
 export class RegisterStudentComponent implements OnInit {
 
-  constructor(private studentService: StudentService) { }
+  constructor(private studentService: StudentService, private authService: AuthService) { }
 
   form: FormGroup;
-  private collegeId = "5f3f9d42b58452716c44e5eb";
+  isLoading = false;
   error: String = null;
   showSuccess: boolean = false;
 
@@ -31,19 +32,21 @@ export class RegisterStudentComponent implements OnInit {
       email: this.form.value.email,
       name: `${this.form.value.fname} ${this.form.value.mname} ${this.form.value.lname}`,
       contact: this.form.value.contact,
-      college: this.collegeId,
-      registeredBy: 'shoaib@gmail.com',
+      college: this.authService.loggedUser.value.cid,
+      registeredBy: this.authService.loggedUser.value.email,
       password: this.form.value.contact
     };
-    
+    this.isLoading = true;
     this.studentService.signupStudent(student)
     .subscribe(
       () => {
+        this.isLoading = false;
         this.showSuccess = true;
         this.form.reset();
         setInterval(() => {this.showSuccess = false}, 2000);
       },
       err => {
+        this.isLoading = false;
         this.error = err;
         setInterval(() => {this.error = null}, 5000);
       }

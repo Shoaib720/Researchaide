@@ -8,7 +8,10 @@
             <div class="icon"><img></div>
             <div class="message">Updated successfully!</div>
         </div>
-        <form [formGroup] = "form" (ngSubmit) = "onUpdate()">
+        <div class="spinner" *ngIf="isLoading">
+            <mat-spinner></mat-spinner>
+        </div>
+        <form [formGroup] = "form" (ngSubmit) = "onUpdate()" *ngIf="!isLoading">
             <div class="update-section flex items-center justify-center">
                 <div class="email">
                     <input type="email" placeholder="Email" maxlength="50" required formControlName="email">
@@ -40,10 +43,10 @@
             </div>
         </form>
         <div class="table-section">
-            <div class="no-students" *ngIf="students.length < 1">
+            <div class="no-students" *ngIf="students.length < 1 && !isLoading">
                 <h2>No records found!</h2>
             </div>
-            <table *ngIf = "students.length > 0">
+            <table *ngIf = "students.length > 0 && !isLoading">
                 <tr>
                     <th>Registration Id</th>
                     <th>Email</th>

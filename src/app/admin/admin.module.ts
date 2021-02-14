@@ -10,6 +10,7 @@ import { ManageAdminsComponent } from './manage-admins/manage-admins.component';
 import { RegisterAdminComponent } from './register-admin/register-admin.component';
 import { RegisterCollegeComponent } from './register-college/register-college.component';
 import { ManageCollegesComponent } from './manage-colleges/manage-colleges.component';
+import { AngularMaterialModule } from "../angular-material.module";
 
 @NgModule({
     declarations: [
@@ -25,7 +26,8 @@ import { ManageCollegesComponent } from './manage-colleges/manage-colleges.compo
     imports: [
         CommonModule,
         AdminRoutingModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        AngularMaterialModule
     ]
 })
 

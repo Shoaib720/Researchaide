@@ -2,6 +2,7 @@ import { Injectable } from "@angular/core";
 import { HttpClient } from '@angular/common/http';
 import { catchError } from "rxjs/operators";
 import { ErrorService } from "./error.service";
+import { environment } from "../../environments/environment";
 
 @Injectable({ providedIn: 'root' })
 export class StudentService{
@@ -10,7 +11,7 @@ export class StudentService{
         private errorService: ErrorService
     ){}
 
-    private URL = 'http://localhost:3000/api/v1/users';
+    private URL = environment.backendURL + '/users';
 
     signupStudent(student: any){
         return this.http.post<{message: String, data: String}>(`${this.URL}/student-signup`, student)

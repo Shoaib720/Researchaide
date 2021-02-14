@@ -1,15 +1,16 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from '@angular/common/http';
-import { catchError, tap} from 'rxjs/operators';
-import { Subject, BehaviorSubject } from "rxjs";
+import { catchError } from 'rxjs/operators';
 import { Paper } from "../models/paper";
 import { ErrorService } from "./error.service";
+import { environment } from "../../environments/environment";
 
 @Injectable({ providedIn: 'root' })
 
 export class PaperService{
 
-    private URL = 'http://localhost:3000/api/v1/papers';
+    private URL = environment.backendURL + '/papers';
+    
     WAITING = 0;
     REJECTED = 1;
     APPROVED = 2;
@@ -38,6 +39,13 @@ export class PaperService{
         .pipe(
             catchError(this.errorService.handleError)
         );
+    }
+
+    public getPapersCount(){
+        return this.http.get<{message: String, data: any}>(`${this.URL}/counts`)
+        .pipe(
+            catchError(this.errorService.handleError)
+        )
     }
 
     public getPapersByKeywords(keywords: string){
@@ -70,6 +78,13 @@ export class PaperService{
 
     public rejectPaper(paperId: String){
         return this.http.put<{message: String}>(`${this.URL}/updateStatus/${paperId}`, {status: this.REJECTED}, {headers: {'Content-Type': 'application/json'}})
+        .pipe(
+            catchError(this.errorService.handleError)
+        )
+    }
+
+    public deletePaper(paperId: string){
+        return this.http.delete<{message: string}>(`${this.URL}/${paperId}`)
         .pipe(
             catchError(this.errorService.handleError)
         )

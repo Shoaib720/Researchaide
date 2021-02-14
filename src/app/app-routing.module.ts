@@ -1,6 +1,5 @@
 import { NgModule } from "@angular/core";
-import { RouterModule, Routes } from "@angular/router";
-import { ChangePasswordComponent } from "./change-password/change-password.component";
+import { PreloadAllModules, RouterModule, Routes } from "@angular/router";
 import { TokenAuthGuard } from "./guards/token-auth.guard";
 import { HomeComponent } from "./home/home.component";
 import { LoginComponent } from "./login/login.component";
@@ -14,17 +13,15 @@ const routes: Routes = [
     { path: 'search/:keywords', component: SearchComponent },
     { path: 'login', component: LoginComponent },
     { path: 'first-admin', component: RegisterFirstAdminComponent },
-    { path: 'admin', canLoad: [TokenAuthGuard], loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule)},
-    // { path: 'admin', loadChildren: './admin/admin.module.ts#AdminModule'},
-    { path: 'student', canLoad: [TokenAuthGuard], loadChildren: () => import('./student/student.module').then(m => m.StudentModule) },
-    { path: 'spoc', canLoad: [TokenAuthGuard], loadChildren: () => import('./spoc/spoc.module').then(m => m.SPOCModule) },
-    { path: 'su', canLoad: [TokenAuthGuard], loadChildren: () => import('./super-user/super-user.module').then(m => m.SuperUserModule) },
-    // { path: 'change-pwd', component: ChangePasswordComponent },
+    // { path: 'admin', canLoad: [TokenAuthGuard], loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule)},
+    { path: 'admin', canLoad: [TokenAuthGuard], loadChildren: './admin/admin.module#AdminModule' },
+    { path: 'student', canLoad: [TokenAuthGuard], loadChildren: './student/student.module#StudentModule' },
+    { path: 'spoc', canLoad: [TokenAuthGuard], loadChildren: './spoc/spoc.module#SPOCModule' },
     { path: '**', component: PageNotFoundComponent }
 ]
 
 @NgModule({
-    imports: [RouterModule.forRoot(routes)],
+    imports: [RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })],
     exports: [RouterModule]
 })
 

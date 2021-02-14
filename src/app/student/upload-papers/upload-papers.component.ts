@@ -15,6 +15,7 @@ export class UploadPapersComponent implements OnInit {
     private authService: AuthService
   ) { }
 
+  isLoading: boolean = false;
   filePickerError: String = null;
   isInputFileValid: Boolean = false;
   uploadedPaperId: String = null;
@@ -76,13 +77,16 @@ export class UploadPapersComponent implements OnInit {
     formData.append('uploadedBy', this.authService.loggedUser.value.email),
     formData.append('college', this.authService.loggedUser.value.cid),
     formData.append('file', this.form.value.file);
+    this.isLoading = true;
     this.paperService.uploadPaper(formData)
     .subscribe(
       response => {
+        this.isLoading = false;
         this.uploadedPaperId = response.data.paperId;
         setInterval(() => {this.uploadedPaperId = null}, 3000);
       },
       err => {
+        this.isLoading = false;
         this.error = err,
         setInterval(() => {this.error = null}, 5000);
       }

@@ -1,8 +1,7 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const User = require('../models/user');
-const SuperUser = require('../models/super-user');
 const mongoose = require('mongoose');
+const User = require('../models/user');
 
 const studentSignup = (req, res, next) => {
     if (req.body && req.body.contact) {
@@ -237,7 +236,10 @@ const login = (req, res, next) => {
 }
 
 const getAdmins = (req, res, next) => {
-    User.find({ role: 'admin' })
+    User.aggregate([
+        { $match: { role: 'admin' } },
+        { $sort: { name: 1 } }
+    ])
         .then(admins => {
             res.status(200).json({
                 message: "SUCCESS",
@@ -253,7 +255,10 @@ const getAdmins = (req, res, next) => {
 }
 
 const getStudentsByCollegeId = (req, res, next) => {
-    User.find({ college: req.params.collegeId, role: 'student' })
+    User.aggregate([
+        { $match: { college: req.params.collegeId, role: 'student' } },
+        { $sort: { name: 1 } }
+    ])
         .populate('college')
         .exec(
             (err, result) => {
@@ -274,7 +279,10 @@ const getStudentsByCollegeId = (req, res, next) => {
 }
 
 const getSPOCs = (req, res, next) => {
-    User.find({ role: 'spoc' })
+    User.aggregate([
+        { $match: { role: 'spoc' } },
+        { $sort: { name: 1 } }
+    ])
         .populate('college')
         .exec((err, spocs) => {
             if(!err && spocs){

@@ -1,14 +1,17 @@
 <div class="background">
     <div class="container">
         <div class="upload-paper">
-            <form [formGroup]="form" (ngSubmit)="onUpload()">
+            <div class="spinner" *ngIf="isLoading">
+                <mat-spinner></mat-spinner>
+            </div>
+            <form [formGroup]="form" (ngSubmit)="onUpload()" *ngIf="!isLoading">
                 <div class="error flex" *ngIf="error !== null">
                     <div class="icon"><img></div>
                     <div class="message">{{error}}</div>
                 </div>
                 <div class="success flex" *ngIf="uploadedPaperId !== null">
                     <div class="icon"><img></div>
-                    <div class="message">Uploaded successfully! Paper Id: {{uploadedPaperId}}</div>
+                    <div class="message">Uploaded successfully!</div>
                 </div>
                 <div class="title section">
                     <label for="paper-title">Title</label><br>

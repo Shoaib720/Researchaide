@@ -14,6 +14,7 @@ export class RegisterAdminComponent implements OnInit {
 
   form: FormGroup;
   error: String = null;
+  isLoading = false;
   showSuccess: boolean = false;
 
   ngOnInit(): void {
@@ -34,15 +35,17 @@ export class RegisterAdminComponent implements OnInit {
       registeredBy: this.authService.loggedUser.value.email,
       password: this.form.value.contact
     };
-    
+    this.isLoading = true;
     this.adminService.signupAdmin(admin)
     .subscribe(
       () => {
+        this.isLoading = false;
         this.showSuccess = true;
         this.form.reset();
         setInterval(() => {this.showSuccess = false}, 2000);
       },
       err => {
+        this.isLoading = false;
         this.error = err;
         setInterval(() => {this.error = null}, 5000);
       }

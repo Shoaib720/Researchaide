@@ -16,19 +16,19 @@ const app = express();
 
 
 // Connect to local mongo db
-mongoose.connect(process.env.LOCAL_MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false });
+// mongoose.connect(process.env.LOCAL_MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false });
 
 
 // Connect to ATLAS
-// const REMOTE_URL = 'mongodb+srv://shoaib:' + process.env.PRIME_MANAGER_ATLAS_KEY + '@myfreecluster.uqauj.mongodb.net/researchaide?retryWrites=true&w=majority';
-// mongoose.connect(REMOTE_URL, { useNewUrlParser: true, useUnifiedTopology: true });
+const REMOTE_URL = 'mongodb+srv://shoaib:' + process.env.MONGO_ATLAS_KEY + '@myfreecluster.uqauj.mongodb.net/researchaide?retryWrites=true&w=majority';
+mongoose.connect(REMOTE_URL, { useNewUrlParser: true, useUnifiedTopology: true });
 
 
 // ===========================================================================================
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
-app.use('/uploads', express.static(path.join('backend/uploads')));
+app.use('/uploads', express.static(path.join('app/uploads')));
 
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin','*');

@@ -14,6 +14,7 @@ export class ChangePasswordComponent implements OnInit, OnDestroy {
 
   form: FormGroup;
   error: string = null;
+  isLoading = false;
   showSuccess: boolean = false;
 
   private changeSub: Subscription;
@@ -38,13 +39,16 @@ export class ChangePasswordComponent implements OnInit, OnDestroy {
     const oldPassword: string = this.form.value.oldPwd;
     const newPassword: string = this.form.value.newPwd;
     const credentials = {email, oldPassword, newPassword};
+    this.isLoading = true;
     this.authService.changePassword(credentials)
     .subscribe(
       () => {
+        this.isLoading = false;
         this.showSuccess = true;
         setInterval(() => {this.showSuccess = false}, 3000);
       },
       err => {
+        this.isLoading = false;
         this.error = err;
         setInterval(() => {this.error = null}, 3000);
       }
