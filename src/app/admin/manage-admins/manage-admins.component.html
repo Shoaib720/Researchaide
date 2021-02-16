@@ -30,14 +30,16 @@
                         [ngClass]="!form.valid ? 'btn-disable' : 'btn-success'"
                     >Update</button>
                     <button
+                        type="button"
                         (click) = "onDelete()"
                         class="btn"
                         [disabled]="!form.valid"
                         [ngClass]="!form.valid ? 'btn-disable' : 'btn-danger'"
                     >Delete</button>
                     <button
+                    type="button"
                     (click) = "onClear()"
-                        class="btn btn-primary"
+                    class="btn btn-primary"
                     >Clear</button>
                 </div>
             </div>

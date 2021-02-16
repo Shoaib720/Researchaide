@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Paper } from 'src/app/models/paper';
 import { AuthService } from 'src/app/services/auth.service';
+import { ModalService } from 'src/app/services/modal.service';
 import { PaperService } from 'src/app/services/paper.service';
 import { environment } from '../../../environments/environment';
 
@@ -12,7 +13,11 @@ import { environment } from '../../../environments/environment';
 })
 export class MyPapersComponent implements OnInit, OnDestroy {
 
-  constructor(private paperService: PaperService, private authService: AuthService) { }
+  constructor(
+    private paperService: PaperService,
+    private authService: AuthService,
+    private modalService: ModalService
+  ) { }
 
   error: string = null;
   papers: Paper[] = [];
@@ -21,6 +26,7 @@ export class MyPapersComponent implements OnInit, OnDestroy {
   private URL = environment.backendURL + '/papers';
   private paperSub: Subscription;
   private delPaperSub: Subscription;
+  private modalSub: Subscription;
 
   ngOnInit(): void {
     this.fetchPapers();
@@ -50,25 +56,31 @@ export class MyPapersComponent implements OnInit, OnDestroy {
   }
 
   onDelete(id: number){
-    const paperId = this.papers[id].paperId
-    this.isLoading = true;
-    this.delPaperSub = this.paperService.deletePaper(paperId)
-    .subscribe(
-      _ => {
-        this.isLoading = false;
-        this.fetchPapers();
-      },
-      err => {
-        this.isLoading = false;
-        this.error = err;
-        setInterval(_ => {this.error = null}, 5000);
+    this.modalSub = this.modalService.OpenConfirmCancelModal(ModalService.DELETE_MESSAGE, true)
+    .subscribe(result => {
+      if(result){
+        const paperId = this.papers[id].paperId
+        this.isLoading = true;
+        this.delPaperSub = this.paperService.deletePaper(paperId)
+        .subscribe(
+          _ => {
+            this.isLoading = false;
+            this.fetchPapers();
+          },
+          err => {
+            this.isLoading = false;
+            this.error = err;
+            setInterval(_ => {this.error = null}, 5000);
+          }
+        )
       }
-    )
+    })
   }
 
   ngOnDestroy(){
     if(this.paperSub) this.paperSub.unsubscribe();
     if(this.delPaperSub) this.delPaperSub.unsubscribe();
+    if(this.modalSub) this.modalSub.unsubscribe();
   }
 
 }

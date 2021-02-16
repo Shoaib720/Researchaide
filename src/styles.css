@@ -109,6 +109,13 @@ body{
     background-color: var(--success-dark);
     color: var(--heaven);
 }
+.btn-cancel{
+    background-color:rgb(175, 170, 170);
+    color: black;
+}
+.btn-cancel:hover{
+    background-color:rgb(104, 104, 104);
+}
 
 a{
     text-decoration: none;

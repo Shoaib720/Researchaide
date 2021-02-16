@@ -1,6 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { Subscription } from 'rxjs';
 import { Student } from 'src/app/models/student';
+import { AuthService } from 'src/app/services/auth.service';
+import { ModalService } from 'src/app/services/modal.service';
 import { StudentService } from 'src/app/services/student.service';
 
 @Component({
@@ -8,10 +11,12 @@ import { StudentService } from 'src/app/services/student.service';
   templateUrl: './manage-student.component.html',
   styleUrls: ['./manage-student.component.css']
 })
-export class ManageStudentComponent implements OnInit {
+export class ManageStudentComponent implements OnInit, OnDestroy {
 
   constructor(
-    private studentService: StudentService
+    private studentService: StudentService,
+    private authService: AuthService,
+    private modalService: ModalService
   ) { }
 
   form: FormGroup;
@@ -20,7 +25,7 @@ export class ManageStudentComponent implements OnInit {
   showSuccess: boolean = false;
   private selectedStudent: Student = null;
   students: Student[] = [];
-  private collegeId = "5f3f9d42b58452716c44e5eb";
+  private modalSub: Subscription;
 
   ngOnInit(): void {
     this.form = new FormGroup({
@@ -33,7 +38,7 @@ export class ManageStudentComponent implements OnInit {
 
   private fetchStudentData(){
     this.isLoading = true;
-    this.studentService.getStudentsByCollegeId(this.collegeId)
+    this.studentService.getStudentsByCollegeId(this.authService.loggedUser.value.cid)
     .subscribe(
       response => {
         this.isLoading = false;
@@ -51,28 +56,33 @@ export class ManageStudentComponent implements OnInit {
   }
 
   onUpdate(){
-    const data : any = {
-      email: this.form.value.email,
-      name: this.form.value.name,
-      contact: this.form.value.contact
-    }
-    this.isLoading = true;
-    this.studentService.updateStudentData(this.selectedStudent.studentId, data)
-    .subscribe(
-      () => {
-        this.isLoading = false;
-        this.showSuccess = true;
-        setInterval(() => {this.showSuccess = false}, 2000);
-        this.fetchStudentData();
-        this.selectedStudent = null;
-        this.form.reset();
-      },
-      err => {
-        this.isLoading = false;
-        this.error = err;
-        setInterval(() => {this.error = null}, 5000);
+    this.modalSub = this.modalService.OpenConfirmCancelModal(ModalService.UPDATE_MESSAGE, false)
+    .subscribe(result => {
+      if(result){
+        const data : any = {
+          email: this.form.value.email,
+          name: this.form.value.name,
+          contact: this.form.value.contact
+        }
+        this.isLoading = true;
+        this.studentService.updateStudentData(this.selectedStudent.studentId, data)
+        .subscribe(
+          () => {
+            this.isLoading = false;
+            this.showSuccess = true;
+            setInterval(() => {this.showSuccess = false}, 2000);
+            this.fetchStudentData();
+            this.selectedStudent = null;
+            this.form.reset();
+          },
+          err => {
+            this.isLoading = false;
+            this.error = err;
+            setInterval(() => {this.error = null}, 5000);
+          }
+        )
       }
-    )
+    })
   }
 
   onStudentSelected(id: number){
@@ -86,28 +96,37 @@ export class ManageStudentComponent implements OnInit {
   }
 
   onDelete(){
-    this.isLoading = true;
-    this.studentService.deleteStudent(this.selectedStudent.studentId)
-    .subscribe(
-      () => {
-        this.isLoading = false;
-        this.showSuccess = true;
-        setInterval(() => {this.showSuccess = false}, 2000);
-        this.fetchStudentData();
-        this.selectedStudent = null;
-        this.form.reset();
-      },
-      err => {
-        this.isLoading = false;
-        this.error = err;
-        setInterval(() => {this.error = null}, 5000);
+    this.modalSub = this.modalService.OpenConfirmCancelModal(ModalService.DELETE_MESSAGE, true)
+    .subscribe(result => {
+      if(result){
+        this.isLoading = true;
+        this.studentService.deleteStudent(this.selectedStudent.studentId)
+        .subscribe(
+          () => {
+            this.isLoading = false;
+            this.showSuccess = true;
+            setInterval(() => {this.showSuccess = false}, 2000);
+            this.fetchStudentData();
+            this.selectedStudent = null;
+            this.form.reset();
+          },
+          err => {
+            this.isLoading = false;
+            this.error = err;
+            setInterval(() => {this.error = null}, 5000);
+          }
+        )
       }
-    )
+    });
   }
 
   onClear(){
     this.form.reset();
     this.selectedStudent = null;
+  }
+
+  ngOnDestroy(){
+    if(this.modalSub) this.modalSub.unsubscribe();
   }
 
 }

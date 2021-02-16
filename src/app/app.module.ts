@@ -22,6 +22,7 @@ import { ChangePasswordComponent } from './change-password/change-password.compo
 import { RegisterFirstAdminComponent } from './register-first-admin/register-first-admin.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AngularMaterialModule } from './angular-material.module';
+import { ConfirmCancelModalComponent } from './shared/modals/confirm-cancel-modal/confirm-cancel-modal.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { AngularMaterialModule } from './angular-material.module';
     LoginComponent,
     PageNotFoundComponent,
     ChangePasswordComponent,
-    RegisterFirstAdminComponent
+    RegisterFirstAdminComponent,
+    ConfirmCancelModalComponent
   ],
   imports: [
     BrowserModule,

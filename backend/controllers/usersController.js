@@ -255,27 +255,25 @@ const getAdmins = (req, res, next) => {
 }
 
 const getStudentsByCollegeId = (req, res, next) => {
-    User.aggregate([
-        { $match: { college: req.params.collegeId, role: 'student' } },
-        { $sort: { name: 1 } }
-    ])
-        .populate('college')
-        .exec(
-            (err, result) => {
-                if (!err && result) {
-                    res.status(200).json({
-                        message: "SUCCESS",
-                        data: result
-                    });
-                }
-                else {
-                    res.status(500).json({
-                        message: "INTERNAL_SERVER_ERROR",
-                        error: err
-                    });
-                }
+    User.find({ college: req.params.collegeId, role: 'student' })
+    .sort({ name: 1 })
+    .populate('college')
+    .exec(
+        (err, result) => {
+            if (!err && result) {
+                res.status(200).json({
+                    message: "SUCCESS",
+                    data: result
+                });
             }
-        )
+            else {
+                res.status(500).json({
+                    message: "INTERNAL_SERVER_ERROR",
+                    error: err
+                });
+            }
+        }
+    )
 }
 
 const getSPOCs = (req, res, next) => {
@@ -303,18 +301,18 @@ const getCountsByRoles = (req, res, next) => {
         { $group: { _id: '$role', count: { $sum: 1 } } },
         { $project: { _id: 0, role: '$_id', count: 1 } }
     ])
-        .then(counts => {
-            res.status(200).json({
-                message: "SUCCESS",
-                data: counts
-            });
-        })
-        .catch(err => {
-            res.status(500).json({
-                message: "INTERNAL_SERVER_ERROR",
-                error: err
-            });
+    .then(counts => {
+        res.status(200).json({
+            message: "SUCCESS",
+            data: counts
         });
+    })
+    .catch(err => {
+        res.status(500).json({
+            message: "INTERNAL_SERVER_ERROR",
+            error: err
+        });
+    });
 }
 
 const update = (req, res, next) => {
@@ -326,17 +324,17 @@ const update = (req, res, next) => {
             contact: req.body.contact
         }
     )
-        .then(result => {
-            res.status(201).json({
-                message: 'SUCCESS'
-            });
-        })
-        .catch(err => {
-            res.status(500).json({
-                message: "INTERNAL_SERVER_ERROR",
-                error: err
-            });
+    .then(result => {
+        res.status(201).json({
+            message: 'SUCCESS'
         });
+    })
+    .catch(err => {
+        res.status(500).json({
+            message: "INTERNAL_SERVER_ERROR",
+            error: err
+        });
+    });
 }
 
 const updatePassword = (req, res, next) => {

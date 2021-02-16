@@ -48,7 +48,7 @@ export class AuthService{
         if(localStorage.getItem('token')){
             const token: IAuthToken = jwt_decode(localStorage.getItem('token'));
             const user: AuthData = new AuthData(token, localStorage.getItem('token'));
-            if(!token){
+            if(!user.token){
                 this.router.navigate(['/home']);
             }
             if(user.token){

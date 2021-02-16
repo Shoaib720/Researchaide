@@ -1,0 +1,12 @@
+<div class="modal">
+    <div class="modal-message flex items-center">
+        <div [ngClass]="data.isDeleteOperation ? 'warning-icon' : 'info-icon'"><img></div>
+        <div mat-dialog-content>
+            <p>{{data.message}}</p>
+        </div>
+    </div>
+    <div class="modal-action flex justify-center" mat-dialog-actions>
+        <button class="btn btn-cancel"  (click)="onNoClick()">Cancel</button>
+        <button class="btn" [ngClass]="data.isDeleteOperation ? 'btn-danger' : 'btn-primary'" (click)="onYesClick()" cdkFocusInitial>Confirm</button>
+    </div>
+</div>

@@ -129,7 +129,6 @@ const getByAreaOfResearch = (req, res, next) => {
 }
 
 const getByCollegeId = (req, res, next) => {
-    Paper.find({college: req.params.collegeId})
     Paper.aggregate([
         { $match: { college: req.params.collegeId } },
         { $sort: { publicationDate: -1 } },
@@ -170,11 +169,8 @@ const getByUploaderEmail = (req, res, next) => {
 }
 
 const getUnverifiedPapersByCollegeId = (req, res, next) => {
-    Paper.aggregate([
-        { $match: { college: req.params.collegeId, statusCode: 0 } },
-        { $sort: { publicationDate: -1 } },
-        { $limit: 50 }
-    ])
+    Paper.find({college: req.params.collegeId, statusCode: 0})
+    .$sort({ publicationDate: -1 })
     .populate('college')
     .exec((err,papers) => {
         if(!err && papers){

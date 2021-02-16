@@ -1,14 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+import { Observable, Subscription } from 'rxjs';
 import { Admin } from 'src/app/models/admin';
+import { DialogData } from 'src/app/models/dialog-data';
 import { AdminService } from 'src/app/services/admin.service';
+import { ModalService } from 'src/app/services/modal.service';
 
 @Component({
   selector: 'app-manage-admins',
   templateUrl: './manage-admins.component.html',
   styleUrls: ['./manage-admins.component.css']
 })
-export class ManageAdminsComponent implements OnInit {
+export class ManageAdminsComponent implements OnInit, OnDestroy {
 
   form: FormGroup;
   error: String = null;
@@ -16,8 +20,12 @@ export class ManageAdminsComponent implements OnInit {
   isLoading: boolean = false;
   private selectedAdmin: Admin = null;
   admins: Admin[] = [];
+  private dialogSub: Subscription;
 
-  constructor(private adminService: AdminService) { }
+  constructor(
+    private adminService: AdminService,
+    private modalService: ModalService
+  ) { }
 
   ngOnInit(): void {
     this.form = new FormGroup({
@@ -48,26 +56,33 @@ export class ManageAdminsComponent implements OnInit {
   }
 
   onUpdate(){
-    const data : any = {
-      email: this.form.value.email,
-      name: this.form.value.name,
-      contact: this.form.value.contact
-    }
-    this.isLoading = true;
-    this.adminService.updateAdminData(this.selectedAdmin.adminId, data)
+    this.dialogSub = this.modalService.OpenConfirmCancelModal(ModalService.UPDATE_MESSAGE, false)
     .subscribe(
-      () => {
-        this.isLoading = false;
-        this.showSuccess = true;
-        setInterval(() => {this.showSuccess = false}, 2000);
-        this.fetchAdminData();
-        this.selectedAdmin = null;
-        this.form.reset();
-      },
-      err => {
-        this.isLoading = false;
-        this.error = err;
-        setInterval(() => {this.error = null}, 5000);
+      result => {
+        if(result){
+          const data : any = {
+            email: this.form.value.email,
+            name: this.form.value.name,
+            contact: this.form.value.contact
+          }
+          this.isLoading = true;
+          this.adminService.updateAdminData(this.selectedAdmin.adminId, data)
+          .subscribe(
+            () => {
+              this.isLoading = false;
+              this.showSuccess = true;
+              setInterval(() => {this.showSuccess = false}, 2000);
+              this.fetchAdminData();
+              this.selectedAdmin = null;
+              this.form.reset();
+            },
+            err => {
+              this.isLoading = false;
+              this.error = err;
+              setInterval(() => {this.error = null}, 5000);
+            }
+          )
+        }
       }
     )
   }
@@ -83,21 +98,28 @@ export class ManageAdminsComponent implements OnInit {
   }
 
   onDelete(){
-    this.isLoading = true;
-    this.adminService.deleteAdmin(this.selectedAdmin.adminId)
+    this.dialogSub = this.modalService.OpenConfirmCancelModal(ModalService.DELETE_MESSAGE, true)
     .subscribe(
-      () => {
-        this.isLoading = false;
-        this.showSuccess = true;
-        setInterval(() => {this.showSuccess = false}, 2000);
-        this.fetchAdminData();
-        this.selectedAdmin = null;
-        this.form.reset();
-      },
-      err => {
-        this.isLoading = false;
-        this.error = err;
-        setInterval(() => {this.error = null}, 5000);
+      result => {
+        if(result){
+          this.isLoading = true;
+          this.adminService.deleteAdmin(this.selectedAdmin.adminId)
+          .subscribe(
+            () => {
+              this.isLoading = false;
+              this.showSuccess = true;
+              setInterval(() => {this.showSuccess = false}, 2000);
+              this.fetchAdminData();
+              this.selectedAdmin = null;
+              this.form.reset();
+            },
+            err => {
+              this.isLoading = false;
+              this.error = err;
+              setInterval(() => {this.error = null}, 5000);
+            }
+          )
+        }
       }
     )
   }
@@ -105,5 +127,9 @@ export class ManageAdminsComponent implements OnInit {
   onClear(){
     this.form.reset();
     this.selectedAdmin = null;
+  }
+
+  ngOnDestroy(){
+    if(this.dialogSub) this.dialogSub.unsubscribe();
   }
 }

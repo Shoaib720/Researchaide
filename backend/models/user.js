@@ -14,6 +14,10 @@ const userSchema = mongoose.Schema(
     { timestamps: true }
 );
 
-userSchema.plugin(uniqueVal);
+// userSchema.plugin(uniqueVal);
+userSchema.plugin(uniqueVal, {
+    type: 'mongoose-unique-validator',
+    message: 'Error, expected {PATH} to be unique.'
+});
 
 module.exports = mongoose.model('User', userSchema, 'users');

@@ -1,0 +1,25 @@
+.modal{
+    padding: 1rem;
+    min-width: 20rem;
+}
+
+.modal-message{
+    margin-bottom: 1rem;
+}
+
+.modal-message img{
+    height: 2.5rem;
+    margin-right: 1rem;
+}
+
+.info-icon img{
+    content: url('../../../../assets/icons/information-blue.svg');
+}
+
+.warning-icon img{
+    content: url('../../../../assets/icons/warning-red.svg');
+}
+
+.modal-action button{
+    margin: 0 2rem;
+}

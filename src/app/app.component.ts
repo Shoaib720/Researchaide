@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { AuthService } from './services/auth.service';
 
 @Component({
@@ -8,10 +9,11 @@ import { AuthService } from './services/auth.service';
 })
 export class AppComponent implements OnInit {
   title = 'researchaide';
-
+  
   constructor(private authService: AuthService){}
 
   ngOnInit() {
     this.authService.autoLoginUser();
   }
+
 }

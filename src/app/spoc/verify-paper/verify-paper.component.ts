@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { Paper } from 'src/app/models/paper';
 import { AuthService } from 'src/app/services/auth.service';
+import { ModalService } from 'src/app/services/modal.service';
 import { PaperService } from 'src/app/services/paper.service';
 import { environment } from '../../../environments/environment';
 
@@ -9,11 +11,12 @@ import { environment } from '../../../environments/environment';
   templateUrl: './verify-paper.component.html',
   styleUrls: ['./verify-paper.component.css']
 })
-export class VerifyPaperComponent implements OnInit {
+export class VerifyPaperComponent implements OnInit, OnDestroy {
 
   constructor(
     private paperService: PaperService,
-    private authService: AuthService
+    private authService: AuthService,
+    private modalService: ModalService
   ) {}
 
   error: String = null;
@@ -21,7 +24,7 @@ export class VerifyPaperComponent implements OnInit {
   isLoading = false;
   isApproved: boolean = false;
   private URL = environment.backendURL + '/papers';
-  private collegeId: string;
+  private modalSub: Subscription;
 
   ngOnInit(): void {
     this.getUnverifiedPapers(this.authService.loggedUser.value.cid);
@@ -63,23 +66,32 @@ export class VerifyPaperComponent implements OnInit {
   }
 
   onReject(id: number){
-    const paperId = this.papers[id].paperId;
-    this.isLoading = true;
-    this.paperService.rejectPaper(paperId)
-    .subscribe(
-      () => {
-        this.isLoading = false;
-        this.getUnverifiedPapers(this.authService.loggedUser.value.cid);
-      },
-      err => {
-        this.isLoading = false;
-        this.error = err;
+    this.modalSub = this.modalService.OpenConfirmCancelModal(ModalService.REJECT_PAPER_MESSAGE, true)
+    .subscribe(result => {
+      if(result){
+        const paperId = this.papers[id].paperId;
+        this.isLoading = true;
+        this.paperService.rejectPaper(paperId)
+        .subscribe(
+          () => {
+            this.isLoading = false;
+            this.getUnverifiedPapers(this.authService.loggedUser.value.cid);
+          },
+          err => {
+            this.isLoading = false;
+            this.error = err;
+          }
+        )
       }
-    )
+    })
   }
 
   onView(id: number){
     window.open(`${this.URL}/${this.papers[id].paperId}`);
+  }
+
+  ngOnDestroy(){
+    if(this.modalSub) this.modalSub.unsubscribe();
   }
 
 }

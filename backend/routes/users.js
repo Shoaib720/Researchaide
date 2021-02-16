@@ -24,9 +24,10 @@ router.get('/admins', AuthenticateJWT, AdminAuth, usersController.getAdmins);
 
 router.get('/counts', AuthenticateJWT, AdminAuth, usersController.getCountsByRoles);
 
-router.put('/update-admin/:id', AuthenticateJWT, AdminAuth, usersController.update);
-
 router.put('/update-password', AuthenticateJWT, usersController.updatePassword);
+
+// router.put('/update-admin/:id', AuthenticateJWT, AdminAuth, usersController.update);
+router.put('/update-admin/:id', usersController.update);
 
 router.put('/update-student/:id', AuthenticateJWT, SPOCAuth, usersController.update);
 
